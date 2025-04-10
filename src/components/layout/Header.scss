@@ -1,0 +1,79 @@
+/* Header stil ayarları */
+.header {
+  padding: 10px 0;
+}
+
+/* Link stil ayarları */
+.navLink {
+  text-decoration: none;
+  color: #bed754;
+  font-size: 1.1rem;
+  display: inline-block;
+  margin-top: 5px;
+  margin-right: 20px;
+
+  &:hover {
+    color: #cfe089;
+  }
+}
+
+.header-btn {
+  padding: 10px 30px !important;
+
+  border-radius: 15px !important;
+  -webkit-border-radius: 15px !important;
+  -moz-border-radius: 15px !important;
+  -ms-border-radius: 15px !important;
+  -o-border-radius: 15px !important;
+}
+
+/* Register butonu */
+.register-btn {
+  background-color: transparent !important;
+  border: 1px solid #ffffff !important;
+
+  &:hover {
+    background-color: #b3cd3d !important;
+    color: white !important;
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
+}
+
+/* Login butonu */
+.login-btn {
+  background: #bed754 !important;
+  border: none !important;
+
+  &:hover {
+    background-color: #b3cd3d !important;
+    border: 1px solid #ffffff !important;
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+}
+
+.btn .navLink {
+  color: white;
+  display: flex;
+  justify-content: center;
+  margin: 0 ;
+}
+
+.seperate-buttons {
+  display: flex;
+  margin-left: auto;
+  gap: 10px;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .seperate-buttons {
+    margin-top: 30px;
+    margin-left: 0;
+  }
+}
