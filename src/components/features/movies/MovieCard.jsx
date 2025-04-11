@@ -1,16 +1,27 @@
 // src/components/features/movies/MovieCard.jsx
+import Link from 'next/link';
 import React from 'react';
+import styles from './MovieCard.module.scss'
+import Image from 'next/image';
 
-const MovieCard = ({ movie }) => {
+const MovieCard = (props) => {
+
+  const {title, image, id} = props;
+
   return (
-    <div className="card">
-      <div className="card-body">
-        <h5 className="card-title">{movie.title}</h5>
-        <p className="card-text">Rating: {movie.rating}/5</p>
-        <p className="card-text">{movie.description}</p>
-        <a href={`/movies/${movie.id}`} className="btn btn-primary">View Details</a>
-      </div>
-    </div>
+    <div className={styles.card}>
+      <Link href={`/movies/${id}`}passHref >
+      <div className={styles.cardContainer}>
+      <Image src={`/images/${image}`} 
+       alt={title} 
+       width={500}
+       height={750}
+       className={styles.cardImage}
+       layout='responsive'/>
+
+        </div>
+     </Link>
+   </div>
   );
 };
 

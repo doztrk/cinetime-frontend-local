@@ -6,9 +6,8 @@ import MovieList from '../../components/features/movies/MovieList';
 export default function MoviesPage() {
   return (
     <main>
-      <Container className="py-5">
-        <h1>Movies</h1>
-        <p className="lead">Discover our latest movies</p>
+      <Container className='py-5'>
+        <h1 className='text-center py-5'>Movies</h1>
         <MovieList />
       </Container>
     </main>
