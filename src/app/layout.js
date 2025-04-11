@@ -4,6 +4,7 @@ import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.css';
+import Slider from '@/components/ui/slider/slider';
 
 export const metadata = {
   title: 'Cinema Website',
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Header />
+        <Slider/>
         {children}
         <Footer />
       </body>
