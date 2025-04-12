@@ -4,8 +4,11 @@ import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import Link from "next/link";
 import "./Header.scss";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 const Header = () => {
+  const { user, isAuthenticated, logout } = useAuth();
+
   return (
     <Navbar expand="md" bg="dark" variant="dark" className="header">
       <Container>
@@ -50,16 +53,30 @@ const Header = () => {
             </Nav.Link>
 
             <div className="seperate-buttons">
-              <Button as="div" className="header-btn login-btn">
-                <Link href="/login" className="navLink">
-                  Login
-                </Link>
-              </Button>
-              <Button as="div" className="header-btn register-btn">
-                <Link href="/register" className="navLink">
-                  Register
-                </Link>
-              </Button>
+              {isAuthenticated() ? (
+                <div className="d-flex align-items-center">
+                  <span className="me-3">Welcome, {user?.name || "User"}</span>
+                  <button
+                    onClick={logout}
+                    className="btn btn-outline-light btn-sm"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <Button as="div" className="header-btn login-btn">
+                    <Link href="/login" className="navLink">
+                      Login
+                    </Link>
+                  </Button>
+                  <Button as="div" className="header-btn register-btn">
+                    <Link href="/register" className="navLink">
+                      Register
+                    </Link>
+                  </Button>
+                </>
+              )}
             </div>
           </Nav>
         </Navbar.Collapse>
