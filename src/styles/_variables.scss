@@ -1,0 +1,52 @@
+/* CINEMA WEBSITE COLORS */
+// Brand Colors
+$color-primary: #b8d94c;        // Bright lime green (primary brand color)
+$color-secondary: #d2e697;      // Light lime green
+$color-light-gray: #e6e6e6;     // Light gray
+$color-white: #ffffff;          // White
+$color-dark: #4d4d4d;           // Dark gray text
+$color-light-text: #b3b3b3;     // Light gray text
+
+// Button States
+$button-hover: #17C769;         // Bright green for hover state
+$button-inactive: #A1D9BE;      // Light green for inactive state
+$button-disabled: #D5E5F0;      // Light blue for disabled state
+
+// Background
+$bg-dark-green: #002613;        // Dark green for background gradient
+$bg-medium-green: #004d27;      // Medium green for background gradient
+
+// Vendor Prefixes
+$vendors: ("", "-webkit-", "-moz-", "-ms-", "-o-");
+
+// Spacing
+$spacing-xxs: 0.25rem;          // 4px
+$spacing-xs: 0.5rem;            // 8px
+$spacing-sm: 0.75rem;           // 12px
+$spacing-md: 1rem;              // 16px
+$spacing-lg: 1.5rem;            // 24px
+$spacing-xl: 2rem;              // 32px
+$spacing-xxl: 3rem;             // 48px
+
+// Border Radius
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 20px;
+$border-radius-circle: 50%;
+
+// Font Sizes
+$font-size-xs: 0.875rem;        // 14px
+$font-size-sm: 1rem;            // 16px
+$font-size-md: 1.125rem;        // 18px
+$font-size-lg: 1.5rem;          // 24px
+$font-size-xl: 2rem;            // 32px
+
+// Font Weights
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// For Bootstrap (if used)
+$primary: $color-primary;
+$secondary: $color-secondary;
