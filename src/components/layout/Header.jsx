@@ -67,12 +67,12 @@ const Header = () => {
                 <>
                   <Button as="div" className="header-btn login-btn">
                     <Link href="/login" className="navLink">
-                      Login
+                      Giriş Yap
                     </Link>
                   </Button>
                   <Button as="div" className="header-btn register-btn">
                     <Link href="/register" className="navLink">
-                      Register
+                      Hesap Oluştur
                     </Link>
                   </Button>
                 </>
