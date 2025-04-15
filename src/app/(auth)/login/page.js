@@ -60,23 +60,23 @@ export default function LoginPage() {
       router.push("/");
     } else {
       setLoginError(
-        result.error || "Login failed. Please check your credentials."
+        result.error || "Giriş başarısız. Lütfen bilgilerinizi kontrol edin."
       );
     }
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container py-5 vh-100">
       <div className="row justify-content-center">
         <div className="col-md-6 col-lg-5">
           <div className="card shadow">
             <div className="card-body p-4">
-              <h1 className="card-title text-center mb-4">Sign In</h1>
+              <h1 className="card-title text-center mb-4">Giriş Yap</h1>
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="phoneNumber" className="form-label">
-                    Phone Number
+                    Telefon Numarası
                   </label>
                   <input
                     type="tel"
@@ -97,7 +97,7 @@ export default function LoginPage() {
 
                 <div className="mb-4">
                   <label htmlFor="password" className="form-label">
-                    Password
+                    Şifre
                   </label>
                   <input
                     type="password"
@@ -120,7 +120,7 @@ export default function LoginPage() {
                     href="/forgot-password"
                     className="text-decoration-none"
                   >
-                    Forgot Password?
+                    Şifremi Unuttum?
                   </Link>
                 </div>
 
@@ -136,16 +136,16 @@ export default function LoginPage() {
                     className="btn btn-primary btn-lg"
                     disabled={authLoading}
                   >
-                    {authLoading ? "Signing In..." : "Sign In"}
+                    {authLoading ? "Giriş Yapılıyor..." : "Giriş Yap"}
                   </button>
                 </div>
               </form>
 
               <div className="mt-4 text-center">
                 <p>
-                  Don't have an account?{" "}
+                  Hesabınız yok mu?{" "}
                   <Link href="/register" className="text-decoration-none">
-                    Create Account
+                    Hesap Oluştur
                   </Link>
                 </p>
               </div>

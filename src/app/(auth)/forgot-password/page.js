@@ -15,7 +15,7 @@ export default function ForgotPasswordPage() {
 
     if (!email.trim()) {
       setMessage({
-        text: "Please enter your email address",
+        text: "Lütfen e-posta adresinizi girin",
         type: "error",
       });
       return;
@@ -25,7 +25,7 @@ export default function ForgotPasswordPage() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setMessage({
-        text: "Please enter a valid email address",
+        text: "Lütfen geçerli bir e-posta adresi girin",
         type: "error",
       });
       return;
@@ -50,21 +50,22 @@ export default function ForgotPasswordPage() {
 
       if (data.httpStatus === "OK") {
         setMessage({
-          text: data.message || "Password reset code has been sent",
+          text: data.message || "Şifre sıfırlama kodu gönderildi",
           type: "success",
         });
       } else {
         setMessage({
-          text: data.message || "Something went wrong. Please try again.",
+          text:
+            data.message || "Bir şeyler yanlış gitti. Lütfen tekrar deneyin.",
           type: "error",
         });
       }
     } catch (error) {
       setMessage({
-        text: "An error occurred. Please try again later.",
+        text: "Bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
         type: "error",
       });
-      console.error("Forgot password error:", error);
+      console.error("Şifre sıfırlama hatası:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -76,7 +77,7 @@ export default function ForgotPasswordPage() {
         <div className="col-md-6 col-lg-5">
           <div className="card shadow">
             <div className="card-body p-4">
-              <h1 className="card-title text-center mb-4">Reset Password</h1>
+              <h1 className="card-title text-center mb-4">Şifre Sıfırlama</h1>
 
               {message.text && (
                 <div
@@ -92,20 +93,20 @@ export default function ForgotPasswordPage() {
               )}
 
               <p className="text-center mb-4">
-                Enter your email address and we'll send you instructions to
-                reset your password.
+                E-posta adresinizi girin ve şifrenizi sıfırlamak için size
+                talimatlar göndereceğiz.
               </p>
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label htmlFor="email" className="form-label">
-                    Email Address
+                    E-posta Adresi
                   </label>
                   <input
                     type="email"
                     className="form-control"
                     id="email"
-                    placeholder="Enter your email"
+                    placeholder="E-posta adresinizi girin"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -118,16 +119,16 @@ export default function ForgotPasswordPage() {
                     className="btn btn-primary btn-lg"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Sending..." : "Reset Password"}
+                    {isSubmitting ? "Gönderiliyor..." : "Şifreyi Sıfırla"}
                   </button>
                 </div>
               </form>
 
               <div className="mt-4 text-center">
                 <p>
-                  Remember your password?{" "}
+                  Şifrenizi Unuttunuz mu?{" "}
                   <Link href="/login" className="text-decoration-none">
-                    Back to Login
+                    Giriş Sayfasına Dön
                   </Link>
                 </p>
               </div>
