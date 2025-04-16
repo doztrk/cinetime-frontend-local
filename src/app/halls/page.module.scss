@@ -1,0 +1,39 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.hallsPage {
+  width: 100%;
+  background-color: #0f0f0f; 
+}
+
+.hallsHero {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/halls-hero.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: $spacing-xxl 0;
+  margin-bottom: $spacing-xl;
+  text-align: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+.heroTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-white;
+  margin-bottom: $spacing-md;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.heroSubtitle {
+  font-size: $font-size-md;
+  color: #b9b9b9;
+  max-width: 700px;
+  margin: 0 auto;
+}

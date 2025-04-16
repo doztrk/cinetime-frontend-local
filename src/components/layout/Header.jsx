@@ -42,7 +42,7 @@ const Header = () => {
               </Link>
             </Nav.Link>
             <Nav.Link as="div">
-              <Link href="/events" className="navLink">
+              <Link href="/halls" className="navLink">
                 Sinema Salonları
               </Link>
             </Nav.Link>
