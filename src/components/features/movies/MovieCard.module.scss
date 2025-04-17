@@ -5,6 +5,7 @@ $card-bg-color: #34a5dd;
 $card-text-color: #fff;
 $card-border-radius: 10px;
 $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+$hover-bg-color: rgba(157, 214, 23, 0.744); 
 
 body{
   background: 
@@ -18,9 +19,8 @@ body{
     color: white;
     padding: 0;
 
+
     
-
-
 }
 
 .card {
@@ -29,51 +29,143 @@ body{
   overflow: hidden;
   box-shadow: $box-shadow;
   transition: transform 0.3s ease;
-  width: 300px;
-  height: 400px;
-a
-  
+  width: 250px;
+  height: 350px;
 
   &:hover {
-    transform: scale(1.05);
+    .button:nth-child(1){
+      background-color: rgb(157, 214, 23);
+      border:1px solid white;
+    }
+
+    .button:nth-child(2){
+      background-color: black;
+      border:1px solid white;
+    }
+
+   .cardButtons{
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.7s ease, visibility 0s 0s;
+    } 
+
+   
   }
+  
 
 
   .cardContainer {
     position: relative;
-    background-color: #0e3014;
     color: $card-text-color;
     padding: 1.25rem;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+
+    &:hover::after{
+      content:"";
+      position: absolute;
+      background: linear-gradient(to bottom, $hover-bg-color 0%, transparent 100%);
+      top:0;
+      left:0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.8;
+      transition: opacity 1s ease;
+
+    }
   }
+
+  .cardImage{
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cardButtons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:8px;
+    position: absolute;
+    bottom: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+    z-index: 10;
+    transform: translateX(-8px);
+    
+  
+
+    .button{
+      border-radius: 20px;
+      padding: 2px 60px;
+      border:2px solid transparent;
+      cursor: pointer;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      width: 100%;
+
+      &:first-child {
+        
+        transition: background-color 0.3s ease;
+    
+        
+        &:hover {
+          background-color: rgb(157, 214, 23); 
+        }
+      }
+    
+      
+      &:nth-child(2) {
+        background-color: rgb(0, 0, 0);
+        transition: background-color 0.3s ease;
+    
+       
+        &:hover {
+          background-color: rgb(157, 214, 23); 
+        }
+    
+       
+        &:hover ~ .button:first-child {
+          background-color: rgb(0, 0, 0); 
+        }
+      }
+
+    }
+    
+    
+  }
+  
+  
+  
 
   .cardContainer > .next.image {
     object-fit: cover;
     width: 100%;
     height: 200px;
+    color: white;
   }
 
-  .cardContent {
-    padding-top: 15px;
+  
+}
 
-    .cardTitle{
-      font-size: 1.25rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-  }
-
-  .btn-primary {
-    background-color: $primary-color;
-    border: none;
-    color: $card-text-color;
-    padding: 0.5rem;
-    border-radius: 5px;
-    cursor: pointer;
-
-    &:hover{
-      background-color: darken($primary-color, 10%);
-    }
+@media(max-width:768px){
+  .card{
+    width: 100%;
+    height: auto;
+    
   }
 }
+
+@media(max-width:480px){
+  .card{
+    width: 100%;
+    height: auto;
+  }
+}
+
+
