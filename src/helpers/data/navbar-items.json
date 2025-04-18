@@ -1,0 +1,27 @@
+[
+  {
+    "id":"1",
+    "label": "Ana Sayfa",
+    "link": "/"
+  },
+  {
+    "id":"2",
+    "label": "Filmler",
+    "link": "/movies"
+  },
+  {
+    "id":"3",
+    "label": "Etkinlikler",
+    "link": "/events"
+  },
+  {
+    "id":"4",
+    "label": "Sinema Salonları",
+    "link": "/events"
+  },
+  {
+    "id":"5",
+    "label": "Kampanyalar",
+    "link": "/events"
+  }
+]
