@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import Link from "next/link";
 import "./Header.scss";
@@ -9,12 +9,34 @@ import navItems from "@/helpers/data/navbar-items.json";
 
 const Header = () => {
   const { user, isAuthenticated, logout } = useAuth();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Sayfa kaydırma olayını dinlemek için useEffect kullanıyoruz
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true); // Kaydırma olduğunda arka plan rengini değiştir
+      } else {
+        setIsScrolled(false); // En üstteyken arka plan rengini sıfırla
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup işlemi (component unmount olduğunda event listener'ı kaldır)
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <Navbar expand="md" bg="dark" variant="dark" className="header py-2">
+    <Navbar expand="md" variant="dark" className="header fixed-top">
       <Container
         fluid
-        className="header-container d-flex justify-content-between align-items-center"
+        className={`header-container d-flex justify-content-between align-items-center ${
+          isScrolled ? "scrolled" : ""
+        }`} // Kaydırma durumu ekleniyor
+        id="header-container"
       >
         <Navbar.Brand className="d-flex align-items-center">
           <Link href="/" className="logo-link">
