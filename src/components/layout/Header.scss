@@ -1,8 +1,20 @@
 @use "../../styles/variables" as vars;
 @use "../../styles/mixins" as mixins;
 
+#header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: background-color 0.3s ease; // Geçiş efekti
+}
+
 .header {
-  background-color: vars.$color-dark;
+  .header {
+    margin: 0; // Navbar'a ekstra margin eklenmesinin önüne geçer.
+    padding: 0; // Navbar'a ekstra padding eklenmesinin önüne geçer.
+  }
 
   .header-container {
     padding-left: vars.$spacing-md;
@@ -109,8 +121,12 @@
 }
 
 .seperate-buttons {
-
   @media screen and (min-width: 768px) {
     flex-direction: row;
   }
+}
+
+// Kaydırma durumunda arka plan rengini değiştir
+#header-container.scrolled {
+  background-color: vars.$color-dark; // Arka plan rengini değiştirebilirsiniz
 }
