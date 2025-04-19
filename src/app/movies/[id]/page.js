@@ -1,9 +1,13 @@
-// src/app/movies/[id]/page.js
+'use client';
+
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { useRouter } from 'next/navigation';
 // The Header import should be removed
 
 export default function MovieDetailPage({ params }) {
+  const router = useRouter();
+  
   // In a real app, you would fetch movie details based on params.id
   const movie = {
     id: params.id,
@@ -15,6 +19,10 @@ export default function MovieDetailPage({ params }) {
     cast: ['Actor 1', 'Actor 2', 'Actor 3'],
     releaseDate: '2023-01-01',
     duration: '120 min'
+  };
+
+  const handleBuyTickets = () => {
+    router.push(`/seat-selection?movieId=${params.id}`);
   };
 
   return (
@@ -41,7 +49,13 @@ export default function MovieDetailPage({ params }) {
               <h3>Synopsis</h3>
               <p>{movie.description}</p>
             </div>
-            <Button variant="primary" size="lg">Buy Tickets</Button>
+            <Button 
+              variant="primary" 
+              size="lg"
+              onClick={handleBuyTickets}
+            >
+              Buy Tickets
+            </Button>
           </Col>
         </Row>
       </Container>

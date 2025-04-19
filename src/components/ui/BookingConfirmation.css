@@ -1,0 +1,149 @@
+.booking-confirmation-container {
+    background-color: #1a1a1a;
+    min-height: 100vh;
+    color: white;
+    padding: 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.booking-header {
+    text-align: center;
+    margin-bottom: 1rem;
+    max-width: 800px;
+    padding: 0 1rem;
+}
+
+.confirmation-icon {
+    font-size: 3rem;
+    color: #4CAF50;
+    margin-bottom: 1rem;
+}
+
+.booking-header h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.booking-header p {
+    color: #4CAF50;
+    font-size: 1.1rem;
+}
+
+.movie-details {
+    background-color: #242424;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.movie-details h3 {
+    margin-bottom: 1rem;
+    color: white;
+    text-align: center;
+}
+
+.details-row {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.details-row span {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.selected-seats {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 1rem;
+}
+
+.selected-seats h4 {
+    color: white;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.seat-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.seat-tag {
+    background: #242424;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.price-summary {
+    background-color: #242424;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    color: #999;
+}
+
+.price-row.grand-total {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #333;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.download-button {
+    width: 100%;
+    max-width: 600px;
+    padding: 1rem;
+    font-size: 1.1rem;
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.download-button:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+}
+
+@media (max-width: 768px) {
+    .booking-confirmation-container {
+        padding: 1rem;
+    }
+
+    .movie-details,
+    .selected-seats,
+    .price-summary,
+    .download-button {
+        max-width: 100%;
+    }
+
+    .details-row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .seat-tags {
+        justify-content: center;
+    }
+} 

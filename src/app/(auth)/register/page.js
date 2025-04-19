@@ -73,28 +73,30 @@ export default function RegisterPage() {
     const result = await register(registrationData);
 
     if (result.success) {
-      setApiSuccess(result.data.message || "User created successfully");
+      setApiSuccess(result.data.message || "Kullanıcı başarıyla oluşturuldu");
       setTimeout(() => {
         router.push("/login");
       }, 2000);
     } else {
-      setApiError(result.error || "Registration failed. Please try again.");
+      setApiError(
+        result.error || "Kayıt başarısız oldu. Lütfen tekrar deneyin."
+      );
     }
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container py-5 vh-100">
       <div className="row justify-content-center">
         <div className="col-md-8 col-lg-6">
           <div className="card shadow">
             <div className="card-body p-4">
-              <h1 className="card-title text-center mb-4">Create an Account</h1>
+              <h1 className="card-title text-center mb-4">Hesap Oluştur</h1>
 
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <label htmlFor="firstname" className="form-label">
-                      First Name
+                      Ad
                     </label>
                     <input
                       type="text"
@@ -114,7 +116,7 @@ export default function RegisterPage() {
 
                   <div className="col-md-6 mb-3">
                     <label htmlFor="lastname" className="form-label">
-                      Last Name
+                      Soyad
                     </label>
                     <input
                       type="text"
@@ -135,7 +137,7 @@ export default function RegisterPage() {
 
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">
-                    Email Address
+                    E-posta Adresi
                   </label>
                   <input
                     type="email"
@@ -155,7 +157,7 @@ export default function RegisterPage() {
 
                 <div className="mb-3">
                   <label htmlFor="gender" className="form-label">
-                    Gender
+                    Cinsiyet
                   </label>
                   <select
                     className="form-select"
@@ -164,15 +166,15 @@ export default function RegisterPage() {
                     value={formData.gender}
                     onChange={handleChange}
                   >
-                    <option value="MALE">Male</option>
-                    <option value="FEMALE">Female</option>
-                    <option value="OTHER">Other</option>
+                    <option value="MALE">Erkek</option>
+                    <option value="FEMALE">Kadın</option>
+                    <option value="OTHER">Diğer</option>
                   </select>
                 </div>
 
                 <div className="mb-3">
                   <label htmlFor="dateOfBirth" className="form-label">
-                    Date of Birth
+                    Doğum Tarihi
                   </label>
                   <input
                     type="date"
@@ -192,7 +194,7 @@ export default function RegisterPage() {
 
                 <div className="mb-3">
                   <label htmlFor="phoneNumber" className="form-label">
-                    Phone Number
+                    Telefon Numarası
                   </label>
                   <input
                     type="tel"
@@ -213,7 +215,7 @@ export default function RegisterPage() {
 
                 <div className="mb-3">
                   <label htmlFor="password" className="form-label">
-                    Password
+                    Şifre
                   </label>
                   <input
                     type="password"
@@ -230,14 +232,14 @@ export default function RegisterPage() {
                     <div className="invalid-feedback">{errors.password}</div>
                   )}
                   <div className="form-text">
-                    Password must be at least 8 characters with uppercase,
-                    lowercase, number, and special character.
+                    Şifre en az 8 karakter uzunluğunda olmalı ve büyük harf,
+                    küçük harf, sayı ve özel karakter içermelidir.
                   </div>
                 </div>
 
                 <div className="mb-4">
                   <label htmlFor="confirmPassword" className="form-label">
-                    Confirm Password
+                    Şifreyi Onaylayın
                   </label>
                   <input
                     type="password"
@@ -275,16 +277,16 @@ export default function RegisterPage() {
                     className="btn btn-primary btn-lg"
                     disabled={authLoading}
                   >
-                    {authLoading ? "Creating Account..." : "Register"}
+                    {authLoading ? "Hesap Oluşturuluyor..." : "Kayıt Ol"}
                   </button>
                 </div>
               </form>
 
               <div className="mt-4 text-center">
                 <p>
-                  Already have an account?{" "}
+                  Zaten hesabınız var mı?{" "}
                   <Link href="/login" className="text-decoration-none">
-                    Sign In
+                    Giriş Yap
                   </Link>
                 </p>
               </div>
