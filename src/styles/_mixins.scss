@@ -1,4 +1,8 @@
-@import "./variables";
+// src/styles/_mixins.scss
+@use "./variables" as vars;
+
+// Define vendors locally to not rely on variables
+$vendors: ("", "-webkit-", "-moz-", "-ms-", "-o-");
 
 // Flex Mixins
 @mixin flex-center($direction: row) {
@@ -19,28 +23,31 @@
 
 // Border Radius
 @mixin border-radius($radius) {
-  @each $v in $vendors {
-    #{$v}border-radius: $radius;
-  }
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
 }
 
 // Transition
 @mixin transition($val) {
-  @each $v in $vendors {
-    #{$v}transition: $val;
-  }
+  transition: $val;
+  -webkit-transition: $val;
+  -moz-transition: $val;
+  -ms-transition: $val;
 }
 
 // Transform
 @mixin transform($val) {
-  @each $v in $vendors {
-    #{$v}transform: $val;
-  }
+  transform: $val;
+  -webkit-transform: $val;
+  -moz-transform: $val;
+  -ms-transform: $val;
 }
 
 // Cinema Website Background
 @mixin cinema-gradient-bg {
-  background: linear-gradient(135deg, $bg-dark-green 0%, $bg-medium-green 100%);
+  background: linear-gradient(135deg, vars.$bg-dark-green 0%, vars.$bg-medium-green 100%);
 }
 
 // Button Styles
@@ -48,9 +55,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: $font-size-sm;
-  padding: $spacing-xs $spacing-lg;
-  @include border-radius($border-radius-xl);
+  font-size: vars.$font-size-sm;
+  padding: vars.$spacing-xs vars.$spacing-lg;
+  @include border-radius(vars.$border-radius-xl);
   border: none;
   cursor: pointer;
   @include transition("all 0.3s ease");
@@ -61,26 +68,26 @@
 
 @mixin button-primary {
   @include button-base;
-  background-color: $color-primary;
-  color: $color-white;
+  background-color: vars.$color-primary;
+  color: vars.$color-white;
   
   &:hover, &:focus {
-    background-color: $button-hover;
+    background-color: vars.$button-hover;
   }
   
   &:disabled {
-    background-color: $button-disabled;
+    background-color: vars.$button-disabled;
     cursor: not-allowed;
   }
 }
 
 @mixin button-secondary {
   @include button-base;
-  background-color: $button-disabled;
-  color: $color-white;
+  background-color: vars.$button-disabled;
+  color: vars.$color-white;
   
   &:hover, &:focus {
-    background-color: darken($button-disabled, 10%);
+    background-color: darken(vars.$button-disabled, 10%);
   }
   
   &:disabled {
@@ -92,7 +99,7 @@
 // Movie Card
 @mixin movie-card {
   position: relative;
-  @include border-radius($border-radius-md);
+  @include border-radius(vars.$border-radius-md);
   overflow: hidden;
   @include transition("transform 0.3s ease");
   
@@ -106,21 +113,21 @@
 @mixin seat-button {
   width: 40px;
   height: 40px;
-  margin: $spacing-xxs;
-  @include border-radius($border-radius-sm);
+  margin: vars.$spacing-xxs;
+  @include border-radius(vars.$border-radius-sm);
   @include flex-center;
-  border: 1px solid $color-light-gray;
+  border: 1px solid vars.$color-light-gray;
   cursor: pointer;
   @include transition("all 0.3s ease");
   
   &.selected {
-    background-color: $color-primary;
-    color: $color-white;
-    border-color: $color-primary;
+    background-color: vars.$color-primary;
+    color: vars.$color-white;
+    border-color: vars.$color-primary;
   }
   
   &.sold {
-    background-color: $color-light-text;
+    background-color: vars.$color-light-text;
     cursor: not-allowed;
   }
 }
@@ -130,9 +137,9 @@
   @include flex-center;
   width: 80px;
   height: 80px;
-  @include border-radius($border-radius-circle);
-  background-color: $color-primary;
-  color: $color-white;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-bold;
+  @include border-radius(vars.$border-radius-circle);
+  background-color: vars.$color-primary;
+  color: vars.$color-white;
+  font-size: vars.$font-size-lg;
+  font-weight: vars.$font-weight-bold;
 }
