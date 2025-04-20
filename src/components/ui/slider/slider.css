@@ -1,14 +1,14 @@
 /* SLIDER container */
 .swiper-container {
   width: 100%;
-  height: 100vh;
+  height: 600px;
   position: relative;
   overflow: hidden;
 }
 
 .swiper-slide {
   width: 100%;
-  height: 100vh;
+  height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,7 +22,7 @@
   height: 100%;
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: cover;
+  background-size: contain;
   background-attachment: scroll;
   border: none;
 }
