@@ -14,6 +14,8 @@
   align-items: center;
   background-color: #000;
   position: relative;
+  padding: 0;
+  margin: 0;
 }
 
 .slide-content {
@@ -22,9 +24,11 @@
   height: 100%;
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: contain;
-  background-attachment: scroll;
+  background-size: cover;
+  background-attachment: fixed;
   border: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* Metin ve Butonlar */
@@ -35,7 +39,14 @@
   color: white;
   z-index: 5;
   max-width: 500px;
+  padding: 0; /* padding sıfırlandı */
+  background: none; /* transparan arka plan kaldırıldı */
+  border-radius: 0; /* köşeleri sıfırlandı */
+  box-shadow: none; /* gölge kaldırıldı */
 }
+
+
+
 
 .slide-inner h3 {
   font-size: 2.5rem;
@@ -49,7 +60,7 @@
   line-height: 1.6;
   color: #fff;
   max-width: 450px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
 }
 
 /* İkonlar, Süre ve Puan */
@@ -170,17 +181,15 @@
     height: auto;
   }
 
-  .slide-content {
-    height: auto;
-    aspect-ratio: 16 / 9;
-    background-size: contain;
-    background-position: center;
-  }
-
   .slide-inner {
     position: static;
-    padding: 20px;
-    text-align: center;
+    background-color: rgba(114, 108, 108, 0.6);
+    margin: 10px;
+    max-width: 90%;
+  }
+
+  .slide-content {
+    background-size: contain;
   }
 
   .slide-inner h3 {
