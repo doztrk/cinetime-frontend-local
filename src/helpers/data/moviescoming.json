@@ -1,0 +1,44 @@
+[
+    {
+        "id":7,
+        "image":"/images/movies/comingsoon/amator.png",
+        "title": "Movie Title 5",
+        "description":"This is another movie description",
+        "rating": 4.5
+    },
+    {
+        "id": 8,
+        "image": "/images/movies/comingsoon/baslangic.png",
+        "title": "Movie Title 6",
+        "description": "This is another movie description",
+        "rating": 4.5
+    },
+    {
+        "id": 9,
+        "image": "/images/movies/comingsoon/olumevsim.png",
+        "title": "Movie Title 7",
+        "description": "This is another movie description",
+        "rating": 4.5
+    },
+    {
+        "id": 10,
+        "image": "/images/movies/comingsoon/pulpfiction.png",
+        "title": "Movie Title 8",
+        "description": "This is another movie description",
+        "rating": 4.5
+    },
+    {
+        "id": 11,
+        "image": "/images/movies/comingsoon/safagakadar.png",
+        "title": "Movie Title 9",
+        "description": "This is another movie description",
+        "rating": 4.5
+    },
+    {
+        "id": 12,
+        "image": "/images/movies/comingsoon/saykoterapi.png",
+        "title": "Movie Title 10",
+        "description": "This is another movie description",
+        "rating": 4.5
+    }
+]
