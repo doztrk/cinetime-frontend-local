@@ -12,14 +12,21 @@ import { AuthError } from "next-auth";
 
 export const loginAction = async (prevState, formData) => {
   const fields = convertFormDataToJSON(formData);
+  console.log("Temizlenmiş Form Verileri:", fields); // Artık sadece gerçek alanlar var
 
   try {
     AuthSchema.validateSync(fields, { abortEarly: false });
 
-    await signIn("credentials", fields);
-    // auth.js dosyasindaki, provider altindaki authorize methoduna gider.
-    // Eger login basarili ise kullanici giris yapmis olur
-    // login basarili degise bu satirda hata firlatilir.
+    const result = await signIn("credentials", {
+      ...fields,
+      redirect: false, // BU ÇOK KRİTİK
+    });
+
+    if (result.error) {
+      return response(true, fields, result.error);
+    }
+
+    return response(true, fields, "Login successful");
   } catch (err) {
     if (err instanceof YupValidationError) {
       return transformYupErrors(err.inner, fields);

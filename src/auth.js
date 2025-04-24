@@ -1,81 +1,72 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { login } from "./services/auth-service";
-import { NextResponse } from "next/server";
-import { getIsTokenValid, getIsUserAuthorized } from "./helpers/auth-helper";
+import { login } from "@/services/auth-service"; // login fonksiyonunu doğru şekilde import et
+import { parseJWT } from "./helpers/auth-helper"; // JWT çözümleyici fonksiyon
 
 const config = {
   providers: [
     Credentials({
+      name: "credentials",
+      credentials: {
+        phoneNumber: { label: "Phone Number", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
       authorize: async (credentials) => {
-        // bu method dan donecek data userSession i olusturur
-        const res = await login(credentials);
-        const data = await res.json();
+        console.log("Gelen credentials:", credentials); // Burada loglama yaparak giriş verilerini kontrol et
+
+        const loginData = {
+          phoneNumber: credentials.phoneNumber, // phoneNumber'ı doğru şekilde gönder
+          password: credentials.password, // password'ı da gönder
+        };
+
+        // Backend login fonksiyonu çağrılır
+        const res = await login(loginData);
 
         if (!res.ok) {
-          return null; // login basarili degilse null dondurur
+          const errorData = await res.json(); // Hata mesajını detaylı şekilde al
+          console.log("Login Hatası:", errorData.message); // Backend'den gelen hata mesajını yazdır
+          return null;
         }
 
-        const payload = {
-          user: { ...data },
-          accessToken: data.token,
-        };
-        delete payload.user.token;
+        const data = await res.json();
+        console.log("API Yanıtı:", data); // API yanıtını kontrol et
 
-        return payload;
+        const accessToken = data.token;
+        if (!accessToken) {
+          console.log("Token bulunamadı");
+          return null;
+        }
+
+        const decoded = parseJWT(accessToken);
+        const role = decoded?.role || "user"; // Varsayılan olarak 'user' rolü atanır
+
+        return {
+          user: {
+            phoneNumber: credentials.phoneNumber,
+            role,
+          },
+          accessToken,
+        };
       },
     }),
   ],
   callbacks: {
-    // middleware in kapsama alanina giren sayfalara bir istek yapildiginda bu callback calisir. Kullanici sayfaya yonlendirilmeden once calisir. Buradan donen deger true ise kullanici hedef sayfaya yonlendirilir, eger false donerse kullanici hedef sayfaya giremez.
-    authorized({ auth, request }) {
-      const { pathname, searchParams, origin } = request.nextUrl;
-
-      const userRole = auth?.user?.role;
-      const isLoggedIn = !!userRole;
-      const isInLoginPage = pathname.startsWith("/login");
-      const isInDashboardPages = pathname.startsWith("/dashboard");
-      const isAPITokenValid = getIsTokenValid(auth?.accessToken);
-
-      if (isLoggedIn && isAPITokenValid) {
-        if (isInLoginPage) {
-          const url = searchParams.get("callbackUrl") || `${origin}/dashboard`;
-          return NextResponse.redirect(url);
-        } else if (isInDashboardPages) {
-          const isUserAuthorized = getIsUserAuthorized(userRole, pathname);
-          if (!isUserAuthorized) {
-            const url = `${origin}/unauthorized`;
-            return NextResponse.redirect(url);
-          }
-        }
-      } else if (isInDashboardPages) {
-        return false;
-      }
-
-      return true;
-    },
-
-    // Uygulamada JWT token a ihtiyac duyuldugunda burasi calisir
     async jwt({ token, user }) {
-      return { ...token, ...user };
+      if (user) {
+        return { ...token, ...user };
+      }
+      return token;
     },
-
-    // Uygulamada Session bilgisine ihtiyac duyuldugunda burasi calisir
     async session({ session, token }) {
       const { accessToken, user } = token;
-      const isAPITokenValid = getIsTokenValid(accessToken);
-      if (!isAPITokenValid) return null;
-
       session.user = user;
       session.accessToken = accessToken;
-
       return session;
     },
   },
   pages: {
     signIn: "/login",
   },
-  trustHost: true,
 };
 
 export const { handlers, signIn, signOut, auth } = NextAuth(config);
