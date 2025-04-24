@@ -16,7 +16,7 @@ export const getAuthHeader = async () => {
   return authHeader;
 };
 
-const parseJWT = (token) => {
+export const parseJWT = (token) => {
   // token.split(".") -> token dan nokta karakterine gore 3 elemanli bir dizi olsturur
   // token.split(".")[1] -> 1. elemani alir
   // atob(...) -> base64 ile sifrelenmis datayi decode eder
