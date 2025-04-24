@@ -1,5 +1,6 @@
 "use client";
-import React, { useActionState, useState } from "react";
+import React, { useState, useEffect, useActionState } from "react";
+import { useRouter } from "next/navigation"; // Yönlendirme için `next/navigation` kullanıyoruz.
 import { Alert, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { loginAction } from "@/actions/auth-action";
 import { initialState } from "@/helpers/form-validation";
@@ -18,6 +19,8 @@ const LoginForm = () => {
     password: "",
   });
 
+  const router = useRouter(); // Next.js yönlendirme için `useRouter`
+
   const handlePhoneChange = (e) => {
     const formattedValue = formatPhoneNumber(e.target.value);
     setFormData((prev) => ({
@@ -34,12 +37,11 @@ const LoginForm = () => {
   };
 
   // Başarılı login sonrası yönlendirme
-  if (state.ok) {
-    // Bu koşul her render'da kontrol edilir ve yönlendirme yapılır
-    if (typeof window !== "undefined") {
-      window.location.href = "/";
+  useEffect(() => {
+    if (state.ok) {
+      router.push("/"); // Ana sayfaya yönlendiriyoruz
     }
-  }
+  }, [state.ok, router]); // state.ok değiştiğinde yönlendirme yapılır
 
   return (
     <Container className="login-form">
@@ -53,7 +55,6 @@ const LoginForm = () => {
                 <Alert variant="danger">{state.message}</Alert>
               )}
 
-              {/* 🟢 Server Action buradan tetikleniyor */}
               <Form action={formAction}>
                 <TextInput
                   label="Telefon Numarası"

@@ -11,14 +11,13 @@
 }
 
 .header {
-  .header {
-    margin: 0; // Navbar'a ekstra margin eklenmesinin önüne geçer.
-    padding: 0; // Navbar'a ekstra padding eklenmesinin önüne geçer.
-  }
+  margin: 0;
+  padding: 0;
 
   .header-container {
     padding-left: vars.$spacing-md;
     padding-right: vars.$spacing-md;
+    padding: 5px 0;
 
     @media screen and (min-width: 768px) {
       padding-left: vars.$spacing-lg;
@@ -91,6 +90,7 @@
   background-color: transparent !important;
   border: 1px solid vars.$color-white !important;
   font-size: vars.$font-size-sm;
+  margin-bottom: 3px;
 
   &:hover {
     background-color: vars.$button-hover !important;
@@ -104,6 +104,7 @@
   background: vars.$color-primary !important;
   border: none !important;
   font-size: vars.$font-size-sm;
+  margin-bottom: 3px;
 
   &:hover {
     background-color: vars.$button-hover !important;
