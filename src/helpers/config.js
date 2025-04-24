@@ -5,7 +5,7 @@ export const appConfig = {
     description:
       "CineTime is your go-to platform for discovering the latest movies, showtimes, and exclusive cinema content. Enjoy seamless ticket booking, personalized recommendations, and a world of entertainment at your fingertips.",
   },
-  apiURL: "https://cinetime-api.com",
+  apiURL: "https://localhost:3000/cinetime-api.com",
 
   endpoints: {
     cinema: {
