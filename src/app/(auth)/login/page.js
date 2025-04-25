@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"; // Yönlendirme için `next/navigat
 import { Alert, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { loginAction } from "@/actions/auth-action";
 import { initialState } from "@/helpers/form-validation";
+import { useSession } from "next-auth/react";
 import {
   FormContainer,
   PasswordInput,
@@ -20,7 +21,7 @@ const LoginForm = () => {
     phoneNumber: "",
     password: "",
   });
-
+  const { data: session, status, update } = useSession(); // Session hook'u
   const router = useRouter(); // Next.js yönlendirme için `useRouter`
 
   const handlePasswordChange = (e) => {
@@ -33,9 +34,10 @@ const LoginForm = () => {
   // Başarılı login sonrası yönlendirme
   useEffect(() => {
     if (state.ok) {
-      router.push("/"); // Ana sayfaya yönlendiriyoruz
+      update();
+      router.push("/");
     }
-  }, [state.ok, router]); // state.ok değiştiğinde yönlendirme yapılır
+  }, [state.ok, router]);
 
   return (
     <FormContainer className="login-form">
