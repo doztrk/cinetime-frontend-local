@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "text": "Gözbebeğim",
+    "image": "/images/slider/image5.jpg",
+    "description": "Birlikte atan kalplerin hikayesi... Saf duygular, sıcak bakışlar ve unutulmaz anılarla dolu romantik bir yolculuk.",
+    "ageLimit": "/images/rturk/rtuk-akilli-isaretler-7-yas-ve-uzeri-icin-logo-png_seeklogo-120541.png",
+    "warnings": [
+      "/images/rturk/rtuk-akilli-isaretler-genel-izleyici-kitlesi-logo-png_seeklogo-120543.png"
+    ],
+    "tags": [],
+    "duration": "1 sa 45 dk"
+  },
+  {
+    "id": 2,
+    "text": "Hay Hac Karagöz Hacivat",
+    "image": "/images/slider/image2.jpg",
+    "description": "Karagöz ile Hacivat’ın komik, eğlenceli ve eğitici maceraları şimdi animasyon dünyasında hayat buluyor. Tüm aileye uygun!",
+    "ageLimit": "/images/rturk/rtuk-akilli-isaretler-genel-izleyici-kitlesi-logo-png_seeklogo-120543.png",
+    "warnings": [],
+    "tags": [],
+    "duration": "1 sa 15 dk"
+  },
+  {
+    "id": 3,
+    "text": "Baldız",
+    "image": "/images/slider/image3.jpg",
+    "description": "Aile içi ilişkilerin eğlenceli yüzü: Kayınvalide, baldız ve damat arasında geçen komik ve duygusal hikâyelere hazır olun.",
+    "ageLimit": "/images/rturk/rtuk-akilli-isaretler-7-yas-ve-uzeri-icin-logo-png_seeklogo-120541.png",
+    "warnings": [],
+    "tags": [],
+    "duration": "1 sa 40 dk"
+  },
+  {
+    "id": 7,
+    "text": "Pink Floyd: At Pompeii",
+    "image": "/images/slider/image10.jpg",
+    "description": "Efsanevi rock grubu Pink Floyd’un tarihi Pompeii Amfitiyatrosu’nda gerçekleştirdiği unutulmaz performans, IMAX deneyimiyle sinemada! Sınırlı gösterim süresiyle kaçırmayın.",
+    "ageLimit": "/images/rturk/rtuk-akilli-isaretler-13-yas-ve-uzeri-icin-logo-png_seeklogo-120539.png",
+    "warnings": [
+      "/images/rturk/rtuk-akilli-isaretler-siddet-korku-logo-png_seeklogo-120545.png"
+    ],
+    "tags": [],
+    "duration": "1 sa 32 dk"
+  }
+]

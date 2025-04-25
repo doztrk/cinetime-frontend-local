@@ -1,79 +1,139 @@
-/* Header stil ayarları */
-.header {
-  padding: 10px 0;
+@use "../../styles/variables" as vars;
+@use "../../styles/mixins" as mixins;
+
+#header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
 }
 
-/* Link stil ayarları */
+.header {
+  margin: 0;
+  padding: 0;
+
+  .header-container {
+    padding-left: vars.$spacing-md;
+    padding-right: vars.$spacing-md;
+
+    @media screen and (min-width: 768px) {
+      padding-left: vars.$spacing-lg;
+      padding-right: vars.$spacing-lg;
+    }
+
+    @media screen and (min-width: 1200px) {
+      padding-left: vars.$spacing-xxl;
+      padding-right: vars.$spacing-xxl;
+    }
+  }
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  max-width: 150px;
+  height: auto;
+
+  @media screen and (max-width: 1200px) {
+    max-width: 120px;
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 100px;
+  }
+}
+
+.nav-items {
+  flex-direction: column;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+  }
+}
+
 .navLink {
   text-decoration: none;
-  color: #bed754;
-  font-size: 1.1rem;
-  display: inline-block;
-  margin-top: 5px;
-  margin-right: 20px;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+  color: vars.$color-white;
+  font-size: vars.$font-size-md;
+  margin-right: vars.$spacing-xl;
+  transition: color 0.3s ease;
 
   &:hover {
-    color: #cfe089;
+    color: vars.$color-secondary;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: vars.$font-size-sm;
+    margin: vars.$spacing-xs 0;
+    display: block;
+    text-align: center;
   }
 }
 
 .header-btn {
-  padding: 10px 30px !important;
+  padding: vars.$spacing-xs vars.$spacing-lg !important;
 
-  border-radius: 15px !important;
-  -webkit-border-radius: 15px !important;
-  -moz-border-radius: 15px !important;
-  -ms-border-radius: 15px !important;
-  -o-border-radius: 15px !important;
-}
-
-/* Register butonu */
-.register-btn {
-  background-color: transparent !important;
-  border: 1px solid #ffffff !important;
-
-  &:hover {
-    background-color: #b3cd3d !important;
-    color: white !important;
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin-top: vars.$spacing-sm;
+    text-align: center;
   }
 }
 
-/* Login butonu */
-.login-btn {
-  background: #bed754 !important;
-  border: none !important;
+.register-btn {
+  background-color: transparent !important;
+  border: 1px solid vars.$color-white !important;
+  font-size: vars.$font-size-sm;
+  margin-bottom: 3px;
 
   &:hover {
-    background-color: #b3cd3d !important;
-    border: 1px solid #ffffff !important;
-    transform: scale(1.1);
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    transition: transform 0.3s ease;
+    background-color: vars.$button-hover !important;
+    color: vars.$color-white !important;
+    @include mixins.transform(scale(1.1));
+    @include mixins.transition(transform 0.3s ease);
+  }
 }
+
+.login-btn {
+  background: vars.$color-primary !important;
+  border: none !important;
+  font-size: vars.$font-size-sm;
+  margin-bottom: 3px;
+
+  &:hover {
+    background-color: vars.$button-hover !important;
+    border: 1px solid vars.$color-white !important;
+    @include mixins.transform(scale(1.1));
+    @include mixins.transition(transform 0.3s ease);
+  }
 }
 
 .btn .navLink {
-  color: white;
+  color: vars.$color-white;
+  margin: 0;
   display: flex;
   justify-content: center;
-  margin: 0 ;
 }
 
 .seperate-buttons {
-  display: flex;
-  margin-left: auto;
-  gap: 10px;
-  text-align: center;
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+  }
 }
 
-@media screen and (max-width: 768px) {
-  .seperate-buttons {
-    margin-top: 30px;
-    margin-left: 0;
-  }
+// Kaydırma durumunda arka plan rengini değiştir
+#header-container.scrolled {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.9
+  );
+  transition: background-color 0.3s ease;
 }

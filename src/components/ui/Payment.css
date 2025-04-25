@@ -1,0 +1,196 @@
+.payment-container {
+    max-width: 750px;
+    margin: 0.5rem auto;
+    padding: 0.5rem;
+    background: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    min-height: calc(100vh - 4rem);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 100px;
+    color: #fff;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+.payment-container h2 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.timer-bar {
+    background-color: rgba(220, 53, 69, 0.1);
+    padding: 0.5rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    color: #dc3545;
+    font-weight: bold;
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.form-control {
+    background-color: #333;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #999;
+}
+
+.form-control:focus {
+    background-color: #fff;
+    color: #333;
+    box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+    border-color: #4CAF50;
+}
+
+.form-control:not(:placeholder-shown) {
+    background-color: #fff;
+    color: #333;
+}
+
+.price-summary {
+    background: #333;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    color: #fff;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.grand-total {
+    border-top: 1px solid #444;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.info-box {
+    background: rgba(255, 165, 0, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    border: 1px solid rgba(255, 165, 0, 0.2);
+}
+
+.info-icon {
+    color: #FFA500;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.info-box p {
+    margin: 0;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.form-check {
+    margin: 1rem 0;
+}
+
+.form-check-input {
+    background-color: #333;
+    border-color: #444;
+}
+
+.form-check-input:checked {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.form-check-label {
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.btn-success {
+    background-color: #4CAF50;
+    border: none;
+    padding: 1rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    width: 100%;
+    font-size: 1.1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-success:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+.btn-success:disabled {
+    background-color: #666;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Form grupları için stil */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+/* Continue butonu için özel stil */
+.payment-container button[type="submit"] {
+    position: sticky;
+    bottom: 0;
+    margin-top: 2rem;
+    padding: 1rem;
+    font-size: 1.1rem;
+    background-color: #28a745;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.payment-container button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+.payment-container button[type="submit"]:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Form için wrapper */
+.payment-form-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.payment-form-wrapper::-webkit-scrollbar {
+    width: 5px;
+}
+
+.payment-form-wrapper::-webkit-scrollbar-track {
+    background: #333;
+    border-radius: 5px;
+}
+
+.payment-form-wrapper::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 5px;
+}
+
+.payment-form-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #888;
+} 
