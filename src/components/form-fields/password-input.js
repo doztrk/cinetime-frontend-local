@@ -15,7 +15,12 @@ export const PasswordInput = (props) => {
       <FormLabel>{label}</FormLabel>
 
       <InputGroup>
-        <FormControl isInvalid={!!error} size="lg" type={type} {...rest} />
+        <FormControl
+          isInvalid={!!error}
+          size="lg"
+          type={type}
+          {...rest}
+        />
         <InputGroup.Text
           id="password"
           onClick={handleClick}

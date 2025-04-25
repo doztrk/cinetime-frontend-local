@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { login } from "@/services/auth-service"; // login fonksiyonunu doğru şekilde import et
-import { parseJWT } from "./helpers/auth-helper"; // JWT çözümleyici fonksiyon
+import { getIsTokenValid, parseJWT } from "./helpers/auth-helper"; // JWT çözümleyici fonksiyon
 
 const config = {
   providers: [
@@ -59,8 +59,12 @@ const config = {
     },
     async session({ session, token }) {
       const { accessToken, user } = token;
+      const isAPITokenValid = getIsTokenValid(accessToken);
+      if (!isAPITokenValid) return null;
+
       session.user = user;
       session.accessToken = accessToken;
+
       return session;
     },
   },

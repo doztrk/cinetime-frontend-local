@@ -20,7 +20,7 @@ export const SelectInput = (props) => {
         <option value="" disabled>
           Select
         </option>
-        {options.map((item) => (
+        {options?.map((item) => (
           <option value={item[optionValue]} key={item[optionValue]}>
             {item[optionLabel]}
           </option>
