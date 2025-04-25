@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { login } from "@/services/auth-service"; // login fonksiyonunu doğru şekilde import et
-import { getIsTokenValid, parseJWT } from "./helpers/auth-helper"; // JWT çözümleyici fonksiyon
+import { login } from "@/services/auth-service";
+import { getIsTokenValid, parseJWT } from "./helpers/auth-helper";
 
 const config = {
   providers: [
@@ -12,64 +12,83 @@ const config = {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        console.log("Gelen credentials:", credentials); // Burada loglama yaparak giriş verilerini kontrol et
+        console.log("Gelen credentials:", credentials);
 
         const loginData = {
-          phoneNumber: credentials.phoneNumber, // phoneNumber'ı doğru şekilde gönder
-          password: credentials.password, // password'ı da gönder
+          phoneNumber: credentials.phoneNumber,
+          password: credentials.password,
         };
 
-        // Backend login fonksiyonu çağrılır
         const res = await login(loginData);
 
         if (!res.ok) {
-          const errorData = await res.json(); // Hata mesajını detaylı şekilde al
-          console.log("Login Hatası:", errorData.message); // Backend'den gelen hata mesajını yazdır
-          return null;
+          const errorData = await res.json();
+          console.log("Login Hatası:", errorData.message);
+          return null; // Hata durumunda kullanıcıyı null döndürüyoruz
         }
 
         const data = await res.json();
-        console.log("API Yanıtı:", data); // API yanıtını kontrol et
+        console.log("API Yanıtı:", data);
 
         const accessToken = data.token;
         if (!accessToken) {
           console.log("Token bulunamadı");
-          return null;
+          return null; // Token yoksa null dönüyoruz
         }
 
         const decoded = parseJWT(accessToken);
-        const role = decoded?.role || "user"; // Varsayılan olarak 'user' rolü atanır
+        const role = decoded?.role || "user";
 
+        // 'Bearer ' kısmını çıkarıyoruz
         return {
           user: {
             phoneNumber: credentials.phoneNumber,
             role,
           },
-          accessToken,
+          accessToken: accessToken.replace("Bearer ", ""), // Bearer kısmını temizliyoruz
         };
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
+      // Eğer yeni login olmuşsa user objesi doludur
       if (user) {
-        return { ...token, ...user };
+        token.phoneNumber = user.phoneNumber ?? user.sub; // phoneNumber varsa al, yoksa sub'dan al
+        token.role = user.role || "user";
+        token.accessToken = user.accessToken;
+      } else if (token.sub && !token.phoneNumber) {
+        // Refresh gibi durumlarda sub'ı phoneNumber olarak kullan
+        token.phoneNumber = token.sub;
       }
+
       return token;
     },
+
     async session({ session, token }) {
-      const { accessToken, user } = token;
+      console.log("Session Callback - Token:", token);
+
+      const { accessToken, phoneNumber, role } = token;
+
       const isAPITokenValid = getIsTokenValid(accessToken);
-      if (!isAPITokenValid) return null;
+      if (!isAPITokenValid) {
+        console.log("Token geçersiz.");
+        return null;
+      }
 
-      session.user = user;
-      session.accessToken = accessToken;
+      session.user = {
+        phoneNumber: phoneNumber || token.sub || null,
+        role: role || "user",
+      };
 
+      session.accessToken = accessToken || null;
+
+      console.log("Session Callback - Session:", session);
       return session;
     },
   },
   pages: {
-    signIn: "/login",
+    signIn: "/login", // Giriş sayfası yönlendirmesi
   },
 };
 

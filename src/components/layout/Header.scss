@@ -7,7 +7,7 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  transition: background-color 0.3s ease; // Geçiş efekti
+  transition: background-color 0.3s ease;
 }
 
 .header {
@@ -58,7 +58,8 @@
 
 .navLink {
   text-decoration: none;
-  color: vars.$color-primary;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+  color: vars.$color-white;
   font-size: vars.$font-size-md;
   margin-right: vars.$spacing-xl;
   transition: color 0.3s ease;
@@ -128,5 +129,11 @@
 
 // Kaydırma durumunda arka plan rengini değiştir
 #header-container.scrolled {
-  background-color: vars.$color-dark; // Arka plan rengini değiştirebilirsiniz
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.9
+  );
+  transition: background-color 0.3s ease;
 }
