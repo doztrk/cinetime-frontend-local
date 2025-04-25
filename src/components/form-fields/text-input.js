@@ -8,12 +8,7 @@ export const TextInput = (props) => {
   return (
     <FormGroup className={className} controlId={rest.name}>
       <FormLabel>{label}</FormLabel>
-      <FormControl
-        isInvalid={!!error}
-        size="lg"
-        {...rest}
-        value={rest.value ?? ""}
-      />
+      <FormControl isInvalid={!!error} size="lg" {...rest} />
       <FormControl.Feedback type="invalid">{error}</FormControl.Feedback>
     </FormGroup>
   );

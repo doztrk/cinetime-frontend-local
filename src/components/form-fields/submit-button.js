@@ -6,7 +6,7 @@ import { useFormStatus } from "react-dom";
 export const SubmitButton = ({
   title,
   icon = "send",
-  className = "w-100",
+  className = "w-100 btn-success",
   ...rest
 }) => {
   const { pending } = useFormStatus();

@@ -5,9 +5,11 @@ import { Alert, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { loginAction } from "@/actions/auth-action";
 import { initialState } from "@/helpers/form-validation";
 import {
+  FormContainer,
   PasswordInput,
   SubmitButton,
   TextInput,
+  PhoneInput, // PhoneInput bileşenini dahil ettik
 } from "@/components/form-fields";
 import { formatPhoneNumber } from "@/lib/helpers";
 import "./login-form.scss";
@@ -20,14 +22,6 @@ const LoginForm = () => {
   });
 
   const router = useRouter(); // Next.js yönlendirme için `useRouter`
-
-  const handlePhoneChange = (e) => {
-    const formattedValue = formatPhoneNumber(e.target.value);
-    setFormData((prev) => ({
-      ...prev,
-      phoneNumber: formattedValue,
-    }));
-  };
 
   const handlePasswordChange = (e) => {
     setFormData((prev) => ({
@@ -44,42 +38,38 @@ const LoginForm = () => {
   }, [state.ok, router]); // state.ok değiştiğinde yönlendirme yapılır
 
   return (
-    <Container className="login-form">
-      <Row className="justify-content-center">
-        <Col md={8} lg={6}>
-          <Card>
-            <Card.Body>
-              <h4>Giriş Yap</h4>
+    <FormContainer className="login-form">
+      <h4>Giriş Yap</h4>
 
-              {state.ok === false && state.message && (
-                <Alert variant="danger">{state.message}</Alert>
-              )}
+      {state.ok === false && state.message && (
+        <Alert variant="danger">{state.message}</Alert>
+      )}
 
-              <Form action={formAction}>
-                <TextInput
-                  label="Telefon Numarası"
-                  name="phoneNumber"
-                  error={state?.errors?.phoneNumber}
-                  value={formData.phoneNumber}
-                  placeholder="(123) 456-7890"
-                  onChange={handlePhoneChange}
-                  required
-                />
-                <PasswordInput
-                  label="Şifre"
-                  name="password"
-                  error={state?.errors?.password}
-                  value={formData.password}
-                  onChange={handlePasswordChange}
-                  required
-                />
-                <SubmitButton title="Giriş Yap" />
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+      <Form action={formAction}>
+        {/* Telefon numarası input */}
+        <PhoneInput
+          label="Telefon Numarası"
+          name="phoneNumber"
+          error={state?.errors?.phoneNumber}
+          value={formData.phoneNumber}
+          placeholder="(123) 456-7890"
+          required
+        />
+
+        {/* Şifre input */}
+        <PasswordInput
+          label="Şifre"
+          name="password"
+          error={state?.errors?.password}
+          defaultValue={formData.password}
+          onChange={handlePasswordChange}
+          required
+        />
+
+        {/* Giriş yap butonu */}
+        <SubmitButton title="Giriş Yap" />
+      </Form>
+    </FormContainer>
   );
 };
 

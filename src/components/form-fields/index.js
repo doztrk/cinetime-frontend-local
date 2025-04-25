@@ -8,6 +8,7 @@ import { MaskedInput } from "./masked-input";
 import { BackButton } from "./back-button";
 import { MultipleSelectInput } from "./multiple-select-input";
 import { CheckInput } from "./check-input";
+import { PhoneInput } from "./phone-input";
 
 export {
   TextInput,
@@ -20,4 +21,5 @@ export {
   BackButton,
   MultipleSelectInput,
   CheckInput,
+  PhoneInput,
 };

@@ -1,0 +1,17 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.container {
+  margin-top: 100px;
+
+  .form-control {
+    border-color: $color-primary;
+  }
+  .form-control:focus-within {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: $color-primary;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem $color-secondary;
+  }
+}

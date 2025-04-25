@@ -1,29 +1,25 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import Link from "next/link";
 import "./Header.scss";
 import Image from "next/image";
-import { useAuth } from "@/context/AuthContext";
 import navItems from "@/helpers/data/navbar-items.json";
+import { UserMenu } from "./user-menu"; // UserMenu import
 
 const Header = () => {
-  const { user, isAuthenticated, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Sayfa kaydırma olayını dinlemek için useEffect kullanıyoruz
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
-        setIsScrolled(true); // Kaydırma olduğunda arka plan rengini değiştir
+        setIsScrolled(true);
       } else {
-        setIsScrolled(false); // En üstteyken arka plan rengini sıfırla
+        setIsScrolled(false);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    // Cleanup işlemi (component unmount olduğunda event listener'ı kaldır)
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -35,7 +31,7 @@ const Header = () => {
         fluid
         className={`header-container d-flex justify-content-between align-items-center ${
           isScrolled ? "scrolled" : ""
-        }`} // Kaydırma durumu ekleniyor
+        }`}
         id="header-container"
       >
         <Navbar.Brand className="d-flex align-items-center">
@@ -65,32 +61,7 @@ const Header = () => {
             </div>
 
             <div className="seperate-buttons mt-3 mt-md-0">
-              {isAuthenticated() ? (
-                <div className="d-flex align-items-center flex-wrap gap-2">
-                  <span className="me-2 text-white">
-                    Welcome, {user?.name || "User"}
-                  </span>
-                  <button
-                    onClick={logout}
-                    className="btn btn-outline-light btn-sm"
-                  >
-                    Logout
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <Button as="div" className="header-btn login-btn me-2">
-                    <Link href="/login" className="navLink">
-                      Giriş Yap
-                    </Link>
-                  </Button>
-                  <Button as="div" className="header-btn register-btn">
-                    <Link href="/register" className="navLink">
-                      Hesap Oluştur
-                    </Link>
-                  </Button>
-                </>
-              )}
+              <UserMenu /> {/* UserMenu burada render ediliyor */}
             </div>
           </Nav>
         </Navbar.Collapse>
