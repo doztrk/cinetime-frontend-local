@@ -45,9 +45,6 @@
   box-shadow: none; /* gölge kaldırıldı */
 }
 
-
-
-
 .slide-inner h3 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -179,31 +176,51 @@
   .swiper-container,
   .swiper-slide {
     height: auto;
-  }
-
-  .slide-inner {
-    position: static;
-    background-color: rgba(114, 108, 108, 0.6);
-    margin: 10px;
-    max-width: 90%;
+    min-height: 400px; /* Mobilde bir minimum yükseklik */
   }
 
   .slide-content {
-    background-size: contain;
+    background-size: cover; /* Mobilde arka plan tam dolacak */
+    background-position: center center;
+  }
+
+  .slide-inner {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(
+      0,
+      0,
+      0,
+      0.5
+    ); /* Yazıların arkasına yarı saydam kutu */
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 90%;
+    text-align: center;
   }
 
   .slide-inner h3 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
   }
 
   .description {
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+    font-size: 1rem;
+    margin-bottom: 10px;
   }
 
   .movie-meta {
     justify-content: center;
-    gap: 0.8rem;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .slide-icons {
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
   .buttons {
@@ -219,4 +236,27 @@
   .swiper-pagination {
     bottom: 10px;
   }
+}
+
+
+/* Üstten ve alttan gölge efekti */
+.slide-content::before,
+.slide-content::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100px; /* Gölgenin yüksekliği */
+  z-index: 2; /* İçerikten geride kalmasın */
+  pointer-events: none; /* Üzerine tıklamayı engellemesin */
+}
+
+.slide-content::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent);
+}
+
+.slide-content::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
 }
