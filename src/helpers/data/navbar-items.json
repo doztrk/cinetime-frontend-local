@@ -1,27 +1,32 @@
 [
   {
-    "id":"1",
+    "id": "1",
     "label": "Ana Sayfa",
     "link": "/"
   },
   {
-    "id":"2",
+    "id": "2",
     "label": "Filmler",
     "link": "/movies"
   },
   {
-    "id":"3",
+    "id": "3",
     "label": "Sinemalar",
     "link": "/theaters"
   },
   {
-    "id":"4",
+    "id": "4",
     "label": "Sinema Salonları",
     "link": "/halls"
   },
   {
-    "id":"5",
+    "id": "5",
     "label": "Kampanyalar",
+    "link": "/campaigns"
+  },
+  {
+    "id": "6",
+    "label": "Etkinlikler",
     "link": "/events"
   }
 ]

@@ -2,21 +2,17 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Link from "next/link";
-import "./Header.scss";
 import Image from "next/image";
 import navItems from "@/helpers/data/navbar-items.json";
-import { UserMenu } from "./user-menu"; // UserMenu import
+import { UserMenu } from "./user-menu";
+import "./Header.scss";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -34,6 +30,7 @@ const Header = () => {
         }`}
         id="header-container"
       >
+        {/* Sol kısım: Logo */}
         <Navbar.Brand className="d-flex align-items-center">
           <Link href="/" className="logo-link">
             <Image
@@ -47,10 +44,14 @@ const Header = () => {
           </Link>
         </Navbar.Brand>
 
+        {/* Mobilde hamburger butonu */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+        {/* Menü ve Butonlar */}
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="nav-items w-100 d-md-flex justify-content-between align-items-center">
-            <div className="d-md-flex flex-wrap align-items-center">
+          <div className="nav-area d-md-flex justify-content-between align-items-center w-100">
+            {/* Menü Linkleri */}
+            <Nav className="d-md-flex flex-wrap align-items-center">
               {navItems.map((item) => (
                 <Nav.Link as="div" key={item.id}>
                   <Link href={item.link} className="navLink">
@@ -58,12 +59,13 @@ const Header = () => {
                   </Link>
                 </Nav.Link>
               ))}
-            </div>
+            </Nav>
 
-            <div className="seperate-buttons mt-3 mt-md-0">
-              <UserMenu /> {/* UserMenu burada render ediliyor */}
+            {/* Sağ Butonlar */}
+            <div className="seperate-buttons d-flex align-items-center mt-3 mt-md-0">
+              <UserMenu />
             </div>
-          </Nav>
+          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>

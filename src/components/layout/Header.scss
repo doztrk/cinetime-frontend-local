@@ -90,7 +90,6 @@
   background-color: transparent !important;
   border: 1px solid vars.$color-white !important;
   font-size: vars.$font-size-sm;
-  margin-bottom: 3px;
 
   &:hover {
     background-color: vars.$button-hover !important;
@@ -98,13 +97,16 @@
     @include mixins.transform(scale(1.1));
     @include mixins.transition(transform 0.3s ease);
   }
+
+  @media screen and (max-width: 767px) {
+    margin-bottom: 10px;
+  }
 }
 
 .login-btn {
   background: vars.$color-primary !important;
   border: none !important;
   font-size: vars.$font-size-sm;
-  margin-bottom: 3px;
 
   &:hover {
     background-color: vars.$button-hover !important;
@@ -122,18 +124,19 @@
 }
 
 .seperate-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-sm;
+
   @media screen and (min-width: 768px) {
     flex-direction: row;
+    gap: vars.$spacing-md;
+    margin-left: vars.$spacing-lg;
   }
 }
 
 // Kaydırma durumunda arka plan rengini değiştir
 #header-container.scrolled {
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.9
-  );
+  background-color: rgba(0, 0, 0, 0.9);
   transition: background-color 0.3s ease;
 }

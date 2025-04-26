@@ -12,40 +12,31 @@ const config = {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        console.log("Gelen credentials:", credentials);
-
         const loginData = {
           phoneNumber: credentials.phoneNumber,
           password: credentials.password,
         };
 
         const res = await login(loginData);
-
         if (!res.ok) {
-          const errorData = await res.json();
-          console.log("Login Hatası:", errorData.message);
-          return null; // Hata durumunda kullanıcıyı null döndürüyoruz
+          return null;
         }
 
         const data = await res.json();
-        console.log("API Yanıtı:", data);
-
         const accessToken = data.token;
         if (!accessToken) {
-          console.log("Token bulunamadı");
-          return null; // Token yoksa null dönüyoruz
+          return null;
         }
 
+        // Decode etmek sadece token süresini kontrol etmek için işine yarayacak
         const decoded = parseJWT(accessToken);
-        const role = decoded?.role || "user";
 
-        // 'Bearer ' kısmını çıkarıyoruz
         return {
           user: {
-            phoneNumber: credentials.phoneNumber,
-            role,
+            phoneNumber: decoded?.sub || credentials.phoneNumber,
+            role: "user", // Çünkü token içinde rol yok
           },
-          accessToken: accessToken.replace("Bearer ", ""), // Bearer kısmını temizliyoruz
+          accessToken: accessToken,
         };
       },
     }),
@@ -88,7 +79,7 @@ const config = {
     },
   },
   pages: {
-    signIn: "/login", // Giriş sayfası yönlendirmesi
+    signIn: "/login",
   },
 };
 

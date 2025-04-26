@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useActionState } from "react";
-import { useRouter } from "next/navigation"; // Yönlendirme için `next/navigation` kullanıyoruz.
-import { Alert, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { useRouter } from "next/navigation";
+import { Alert, Form } from "react-bootstrap";
 import { loginAction } from "@/actions/auth-action";
 import { initialState } from "@/helpers/form-validation";
 import { useSession } from "next-auth/react";
@@ -9,10 +9,8 @@ import {
   FormContainer,
   PasswordInput,
   SubmitButton,
-  TextInput,
-  PhoneInput, // PhoneInput bileşenini dahil ettik
+  PhoneInput,
 } from "@/components/form-fields";
-import { formatPhoneNumber } from "@/lib/helpers";
 import "./login-form.scss";
 
 const LoginForm = () => {
@@ -21,8 +19,8 @@ const LoginForm = () => {
     phoneNumber: "",
     password: "",
   });
-  const { data: session, status, update } = useSession(); // Session hook'u
-  const router = useRouter(); // Next.js yönlendirme için `useRouter`
+  const { data: session, status, update } = useSession();
+  const router = useRouter();
 
   const handlePasswordChange = (e) => {
     setFormData((prev) => ({
