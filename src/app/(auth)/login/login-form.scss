@@ -1,0 +1,21 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.container {
+  margin-top: 100px;
+  
+  .login-form {
+    margin-bottom: 100px;
+    .card {
+      box-shadow: (0 5px 15px $color-dark);
+      border-top: 10px solid $color-dark;
+    }
+
+    h4 {
+      margin: 20px 0;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 1.2rem;
+    }
+  }
+}

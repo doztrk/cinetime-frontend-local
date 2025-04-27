@@ -7,14 +7,12 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  transition: background-color 0.3s ease; // Geçiş efekti
+  transition: background-color 0.3s ease;
 }
 
 .header {
-  .header {
-    margin: 0; // Navbar'a ekstra margin eklenmesinin önüne geçer.
-    padding: 0; // Navbar'a ekstra padding eklenmesinin önüne geçer.
-  }
+  margin: 0;
+  padding: 0;
 
   .header-container {
     padding-left: vars.$spacing-md;
@@ -60,7 +58,8 @@
 
 .navLink {
   text-decoration: none;
-  color: vars.$color-primary;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+  color: vars.$color-white;
   font-size: vars.$font-size-md;
   margin-right: vars.$spacing-xl;
   transition: color 0.3s ease;
@@ -98,6 +97,10 @@
     @include mixins.transform(scale(1.1));
     @include mixins.transition(transform 0.3s ease);
   }
+
+  @media screen and (max-width: 767px) {
+    margin-bottom: 10px;
+  }
 }
 
 .login-btn {
@@ -121,12 +124,19 @@
 }
 
 .seperate-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-sm;
+
   @media screen and (min-width: 768px) {
     flex-direction: row;
+    gap: vars.$spacing-md;
+    margin-left: vars.$spacing-lg;
   }
 }
 
 // Kaydırma durumunda arka plan rengini değiştir
 #header-container.scrolled {
-  background-color: vars.$color-dark; // Arka plan rengini değiştirebilirsiniz
+  background-color: rgba(0, 0, 0, 0.9);
+  transition: background-color 0.3s ease;
 }

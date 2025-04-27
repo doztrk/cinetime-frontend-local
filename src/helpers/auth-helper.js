@@ -16,25 +16,34 @@ export const getAuthHeader = async () => {
   return authHeader;
 };
 
-const parseJWT = (token) => {
-  // token.split(".") -> token dan nokta karakterine gore 3 elemanli bir dizi olsturur
-  // token.split(".")[1] -> 1. elemani alir
-  // atob(...) -> base64 ile sifrelenmis datayi decode eder
-  // JSON.parse(...) -> decode edilen datayi json formatina cevirir
-
-  return JSON.parse(atob(token.split(".")[1]));
+export const parseJWT = (token) => {
+  // token.split(".") -> token dan nokta karakterine göre 3 elemanlı bir dizi oluşturur
+  // token.split(".")[1] -> 1. elemanı alır
+  // atob(...) -> base64 ile şifrelenmiş veriyi decode eder
+  // JSON.parse(...) -> decode edilen veriyi JSON formatına çevirir
+  // Token'dan 'Bearer ' kısmını temizle
+  try {
+    // token.split(".") -> token dan nokta karakterine göre 3 elemanlı bir dizi oluşturur
+    const decoded = JSON.parse(atob(token.split(".")[1])); // Token'ı çözümleyerek JSON'a çeviriyoruz
+    return decoded;
+  } catch (error) {
+    console.error("JWT decode hatası:", error);
+    return null;
+  }
 };
 
 export const getIsTokenValid = (token) => {
   if (!token) return false;
 
-  const jwtExpireTimeStamp = parseJWT(token).exp;
-  // Burada gelen exp degeri SANIYE cinsinden olur.
+  const decodedToken = parseJWT(token);
+  if (!decodedToken) return false;
+
+  const jwtExpireTimeStamp = decodedToken.exp;
+  // Eğer expire zamanı varsa, token geçerliliğini kontrol et
+  if (!jwtExpireTimeStamp) return false;
 
   const jwtExpireDateTime = new Date(jwtExpireTimeStamp * 1000);
-  // SANIYE degerini MILI SANIYEYE cevirirerek DATE TIME nesnesi olusturur.
-
-  return jwtExpireDateTime > new Date();
+  return jwtExpireDateTime > new Date(); // Geçerli mi diye kontrol et
 };
 
 export const getIsUserAuthorized = (role, targetPath) => {

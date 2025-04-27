@@ -1,29 +1,21 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import Link from "next/link";
-import "./Header.scss";
 import Image from "next/image";
-import { useAuth } from "@/context/AuthContext";
 import navItems from "@/helpers/data/navbar-items.json";
+import { UserMenu } from "./user-menu";
+import "./Header.scss";
 
 const Header = () => {
-  const { user, isAuthenticated, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Sayfa kaydırma olayını dinlemek için useEffect kullanıyoruz
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true); // Kaydırma olduğunda arka plan rengini değiştir
-      } else {
-        setIsScrolled(false); // En üstteyken arka plan rengini sıfırla
-      }
+      setIsScrolled(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    // Cleanup işlemi (component unmount olduğunda event listener'ı kaldır)
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -35,9 +27,10 @@ const Header = () => {
         fluid
         className={`header-container d-flex justify-content-between align-items-center ${
           isScrolled ? "scrolled" : ""
-        }`} // Kaydırma durumu ekleniyor
+        }`}
         id="header-container"
       >
+        {/* Sol kısım: Logo */}
         <Navbar.Brand className="d-flex align-items-center">
           <Link href="/" className="logo-link">
             <Image
@@ -51,10 +44,14 @@ const Header = () => {
           </Link>
         </Navbar.Brand>
 
+        {/* Mobilde hamburger butonu */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+        {/* Menü ve Butonlar */}
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="nav-items w-100 d-md-flex justify-content-between align-items-center">
-            <div className="d-md-flex flex-wrap align-items-center">
+          <div className="nav-area d-md-flex justify-content-between align-items-center w-100">
+            {/* Menü Linkleri */}
+            <Nav className="d-md-flex flex-wrap align-items-center">
               {navItems.map((item) => (
                 <Nav.Link as="div" key={item.id}>
                   <Link href={item.link} className="navLink">
@@ -62,37 +59,13 @@ const Header = () => {
                   </Link>
                 </Nav.Link>
               ))}
-            </div>
+            </Nav>
 
-            <div className="seperate-buttons mt-3 mt-md-0">
-              {isAuthenticated() ? (
-                <div className="d-flex align-items-center flex-wrap gap-2">
-                  <span className="me-2 text-white">
-                    Welcome, {user?.name || "User"}
-                  </span>
-                  <button
-                    onClick={logout}
-                    className="btn btn-outline-light btn-sm"
-                  >
-                    Logout
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <Button as="div" className="header-btn login-btn me-2">
-                    <Link href="/login" className="navLink">
-                      Giriş Yap
-                    </Link>
-                  </Button>
-                  <Button as="div" className="header-btn register-btn">
-                    <Link href="/register" className="navLink">
-                      Hesap Oluştur
-                    </Link>
-                  </Button>
-                </>
-              )}
+            {/* Sağ Butonlar */}
+            <div className="seperate-buttons d-flex align-items-center mt-3 mt-md-0">
+              <UserMenu />
             </div>
-          </Nav>
+          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
