@@ -1,6 +1,5 @@
 "use server";
 
-import { signIn, signOut } from "@/auth";
 import {
   convertFormDataToJSON,
   response,
@@ -8,25 +7,36 @@ import {
   YupValidationError,
 } from "@/helpers/form-validation";
 import { AuthSchema } from "@/helpers/schemes/auth-schema";
-import { AuthError } from "next-auth";
+import { login } from "@/services/auth-service";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const loginAction = async (prevState, formData) => {
   const fields = convertFormDataToJSON(formData);
-  console.log("Temizlenmiş Form Verileri:", fields); // Artık sadece gerçek alanlar var
 
   try {
     AuthSchema.validateSync(fields, { abortEarly: false });
 
-    const result = await signIn("credentials", {
-      ...fields,
-      redirect: false, // BU ÇOK KRİTİK
-    });
+    const req = await login(fields);
+    const result = await req.json();
 
-    if (result.error) {
-      return response(true, fields, result.error);
+    console.log({ result });
+
+    if (result.errors) {
+      return response(false, fields, result.error, result.errors);
     }
 
-    return response(true, fields, "Login successful");
+    if (result.error) {
+      return response(false, fields, result.error);
+    }
+
+    if (result.token) {
+      const cookieStore = await cookies();
+      cookieStore.set("authToken", result.token.replace("Bearer ", ""));
+      return response(true, fields, "Login successful");
+    }
+
+    return response(false, fields, "Login failed");
   } catch (err) {
     if (err instanceof YupValidationError) {
       return transformYupErrors(err.inner, fields);
@@ -39,5 +49,7 @@ export const loginAction = async (prevState, formData) => {
 };
 
 export const logoutAction = async (redirectTo = "/") => {
-  await signOut({ redirectTo });
+  const cookieStore = await cookies();
+  cookieStore.delete("authToken");
+  return true;
 };
