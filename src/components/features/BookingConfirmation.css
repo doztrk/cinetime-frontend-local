@@ -162,7 +162,7 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* 📄 YAZDIRMA MODU (print) */
+
 @media print {
   body {
     background-color: white !important;
@@ -171,7 +171,7 @@
 
   .confirmation-container {
     padding: 0;
-    margin-top: 0 !important; /* fazla boşluğu kaldır */
+    margin-top: 0 !important; 
     background-color: #fff !important;
   }
 
@@ -191,6 +191,6 @@
   .ticket {
     box-shadow: none;
     padding: 20px;
-    page-break-inside: avoid; /* sayfa bölünmesini engelle */
+    page-break-inside: avoid; 
   }
 }
