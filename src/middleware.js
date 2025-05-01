@@ -25,7 +25,7 @@ export const middleware = async (req) => {
     try {
       const meReq = await me(authToken);
       const res = await meReq.json();
-      if (!res.error) {
+      if (res.httpStatus === "OK" && res.object) {
         return NextResponse.next();
       }
       return NextResponse.redirect(new URL("/login", req.url));

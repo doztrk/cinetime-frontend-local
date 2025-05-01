@@ -12,7 +12,7 @@ export const login = (payload) => {
 
 export const me = (token) => {
   return fetch(ME_API_ROUTE, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

@@ -22,8 +22,8 @@ export default async function RootLayout({ children, session }) {
   try {
     const meReq = await me(authToken);
     const res = await meReq.json();
-    if (!res.error) {
-      user = res;
+    if (res.httpStatus === "OK" && res.object) {
+      user = res.object;
       isAuthenticated = true;
     }
   } catch (err) {}

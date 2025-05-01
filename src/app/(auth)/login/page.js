@@ -31,7 +31,9 @@ const LoginForm = () => {
   useEffect(() => {
     if (state.ok) {
       router.refresh();
-      router.push("/");
+      setTimeout(() => {
+        router.push("/");
+      }, 500);
     }
   }, [state.ok, router]);
 

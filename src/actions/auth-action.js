@@ -20,8 +20,6 @@ export const loginAction = async (prevState, formData) => {
     const req = await login(fields);
     const result = await req.json();
 
-    console.log({ result });
-
     if (result.errors) {
       return response(false, fields, result.error, result.errors);
     }
