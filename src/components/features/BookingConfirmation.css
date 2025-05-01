@@ -17,7 +17,7 @@
   margin-bottom: 30px;
   color: #fff;
 }
- 
+
 .success-icon {
   width: 60px;
   height: 60px;
@@ -162,24 +162,35 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+
 @media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+
   .confirmation-container {
     padding: 0;
-    background-color: #fff;
+    margin-top: 0 !important; 
+    background-color: #fff !important;
   }
 
   .success-message,
   .download-button,
-  .back-home-button {
-    display: none;
+  .back-home-button,
+  header,
+  footer {
+    display: none !important;
   }
 
   .confirmation-content {
     max-width: none;
+    width: 100%;
   }
 
   .ticket {
     box-shadow: none;
     padding: 20px;
+    page-break-inside: avoid; 
   }
-} 
+}

@@ -3,7 +3,7 @@ import {
   USER_DELETE_API_ROUTE,
   USER_GET_ALL_BY_PAGE_API_ROUTE,
 } from "@/helpers/api-routes";
-import { getAuthHeader } from "@/helpers/server";
+import { getAuthHeader } from "@/helpers/auth-helper";
 
 export const getAllUsersByPage = async (
   page = 0,

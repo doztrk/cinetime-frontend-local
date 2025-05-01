@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Alert, Form } from "react-bootstrap";
 import { loginAction } from "@/actions/auth-action";
 import { initialState } from "@/helpers/form-validation";
+import { useSession } from "next-auth/react";
 import {
   FormContainer,
   PasswordInput,
@@ -18,6 +19,7 @@ const LoginForm = () => {
     phoneNumber: "",
     password: "",
   });
+  const { data: session, status, update } = useSession();
   const router = useRouter();
 
   const handlePasswordChange = (e) => {
@@ -34,6 +36,8 @@ const LoginForm = () => {
       setTimeout(() => {
         router.push("/");
       }, 500);
+      update();
+      router.push("/");
     }
   }, [state.ok, router]);
 
