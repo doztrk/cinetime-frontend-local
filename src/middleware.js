@@ -9,6 +9,20 @@ export const middleware = async (req) => {
     // auth middleware'i çalıştır
     const response = await auth(req);
 
+  if (isProtectedRoute) {
+    if (!authToken) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+    try {
+      const meReq = await me(authToken);
+      const res = await meReq.json();
+      if (res.httpStatus === "OK" && res.object) {
+        return NextResponse.next();
+      }
+      return NextResponse.redirect(new URL("/login", req.url));
+    } catch (err) {
+      console.error("Middleware auth check error:", err);
+      return NextResponse.redirect(new URL("/login", req.url));
     // Eğer auth middleware'inden bir sonuç dönerse, devam et
     if (response) {
       return NextResponse.next(); // İsteği devam ettir

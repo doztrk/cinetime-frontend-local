@@ -9,3 +9,13 @@ export const login = (payload) => {
     body: JSON.stringify(payload),
   });
 };
+
+export const me = (token) => {
+  return fetch(ME_API_ROUTE, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

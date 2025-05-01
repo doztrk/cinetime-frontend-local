@@ -14,6 +14,19 @@ export const metadata = {
   description: "Your ultimate cinema experience",
 };
 
+export default async function RootLayout({ children, session }) {
+  const authToken = (await getCookie("authToken")) || null;
+  let user = null;
+  let isAuthenticated = false;
+  try {
+    const meReq = await me(authToken);
+    const res = await meReq.json();
+    if (res.httpStatus === "OK" && res.object) {
+      user = res.object;
+      isAuthenticated = true;
+    }
+  } catch (err) {}
+
 export default function RootLayout({ children, session }) {
   return (
     <html lang="en">

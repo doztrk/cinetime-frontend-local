@@ -17,6 +17,12 @@ export const loginAction = async (prevState, formData) => {
   try {
     AuthSchema.validateSync(fields, { abortEarly: false });
 
+    const req = await login(fields);
+    const result = await req.json();
+
+    if (result.errors) {
+      return response(false, fields, result.error, result.errors);
+    }
     const result = await signIn("credentials", {
       ...fields,
       redirect: false, // BU ÇOK KRİTİK

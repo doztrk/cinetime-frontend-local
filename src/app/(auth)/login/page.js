@@ -32,6 +32,10 @@ const LoginForm = () => {
   // Başarılı login sonrası yönlendirme
   useEffect(() => {
     if (state.ok) {
+      router.refresh();
+      setTimeout(() => {
+        router.push("/");
+      }, 500);
       update();
       router.push("/");
     }
