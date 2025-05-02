@@ -1,4 +1,4 @@
-import { LOGIN_API_ROUTE } from "@/helpers/api-routes";
+import { LOGIN_API_ROUTE, ME_API_ROUTE } from "@/helpers/api-routes";
 
 export const login = (payload) => {
   return fetch(LOGIN_API_ROUTE, {
