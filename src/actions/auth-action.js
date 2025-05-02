@@ -1,6 +1,5 @@
 "use server";
 
-import { signIn, signOut } from "@/auth";
 import {
   convertFormDataToJSON,
   response,
@@ -8,7 +7,9 @@ import {
   YupValidationError,
 } from "@/helpers/form-validation";
 import { AuthSchema } from "@/helpers/schemes/auth-schema";
-import { AuthError } from "next-auth";
+import { login } from "@/services/auth-service";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const loginAction = async (prevState, formData) => {
   const fields = convertFormDataToJSON(formData);
@@ -23,27 +24,29 @@ export const loginAction = async (prevState, formData) => {
     if (result.errors) {
       return response(false, fields, result.error, result.errors);
     }
-    const result = await signIn("credentials", {
-      ...fields,
-      redirect: false, // BU ÇOK KRİTİK
-    });
 
     if (result.error) {
-      return response(true, fields, result.error);
+      return response(false, fields, result.error);
     }
 
-    return response(true, fields, "Login successful");
+    if (result.token) {
+      const cookieStore = await cookies();
+      cookieStore.set("authToken", result.token.replace("Bearer ", ""));
+      return response(true, fields, "Login successful");
+    }
+
+    return response(false, fields, "Login failed");
   } catch (err) {
     if (err instanceof YupValidationError) {
       return transformYupErrors(err.inner, fields);
-    } else if (err instanceof AuthError) {
-      return response(false, fields, "Invalid credentials");
     }
 
-    throw err;
+    return response(false, fields, "Invalid credentials");
   }
 };
 
-export const logoutAction = async (redirectTo = "/") => {
-  await signOut({ redirectTo });
+export const logoutAction = async () => {
+  const cookieStore = await cookies();
+  cookieStore.delete("authToken");
+  return true;
 };
