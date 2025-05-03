@@ -1,4 +1,4 @@
-import { LOGIN_API_ROUTE, ME_API_ROUTE } from "@/helpers/api-routes";
+import { LOGIN_API_ROUTE } from "@/helpers/api-routes";
 
 export const login = (payload) => {
   return fetch(LOGIN_API_ROUTE, {
@@ -7,15 +7,5 @@ export const login = (payload) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(payload),
-  });
-};
-
-export const me = (token) => {
-  return fetch(ME_API_ROUTE, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
   });
 };

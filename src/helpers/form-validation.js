@@ -10,22 +10,12 @@ export const convertFormDataToJSON = (formData) => {
   return data;
 };
 
-export const response = (ok, data, message, errors = []) => {
-  let formattedErrors = {};
-  if (Array.isArray(errors)) {
-    formattedErrors = errors?.reduce((acc, error) => {
-      acc[error.field] = error.defaultMessage;
-      return acc;
-    }, {});
-  } else if (typeof errors === "object" && errors !== null) {
-    formattedErrors = errors;
-  }
-
+export const response = (ok, data, message, errors = {}) => {
   return {
     ok,
     data,
     message: message || (ok ? "İşlem başarılı" : "Bir hata oluştu"),
-    errors: formattedErrors,
+    errors,
   };
 };
 
