@@ -1,23 +1,31 @@
 "use client";
+import React, { useEffect } from "react";
+import { useSession, signOut } from "next-auth/react";
 import { UserMenuAuth } from "./user-menu-auth";
 import { UserMenuGuest } from "./user-menu-guest";
-import { useAuth } from "@/context/AuthContext";
-import { logoutAction } from "@/actions/auth-action";
-import { useRouter } from "next/navigation";
+import { getIsTokenValid } from "@/helpers/auth-helper";
 
 export const UserMenu = () => {
-  const { isAuthenticated, user } = useAuth();
-  const router = useRouter();
+  const { data: session, status } = useSession();
 
-  if (isAuthenticated) {
+  useEffect(() => {
+    if (session?.accessToken) {
+      const tokenIsValid = getIsTokenValid(session.accessToken);
+      if (!tokenIsValid) {
+        signOut({ callbackUrl: "/login" });
+      }
+    }
+  }, [session]);
+
+  if (status === "loading") {
+    return <span>Loading...</span>;
+  }
+
+  if (session?.user) {
     return (
       <UserMenuAuth
-        user={user}
-        logout={() => {
-          logoutAction();
-          router.refresh();
-          router.push("/");
-        }}
+        user={session.user}
+        logout={() => signOut({ callbackUrl: "/login" })}
       />
     );
   }
