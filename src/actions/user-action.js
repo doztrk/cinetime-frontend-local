@@ -23,11 +23,12 @@ export const createUserAction = async (prevState, formData) => {
       return response(false, fields, data?.message, data?.validations);
     }
 
-    if (data?.message) {
+    // Burada message içerik kontrolü yapıyoruz
+    if (data?.message?.toLowerCase().includes("already exists")) {
       return response(false, fields, data.message, data?.validations);
     }
 
-    revalidatePath("/dashboard/admin");
+    revalidatePath("/login");
     return response(true, fields, data?.message);
   } catch (err) {
     if (err instanceof YupValidationError) {

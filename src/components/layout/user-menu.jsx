@@ -1,36 +1,23 @@
 "use client";
-import React, { useEffect } from "react";
-import { useSession, signOut } from "next-auth/react";
 import { UserMenuAuth } from "./user-menu-auth";
 import { UserMenuGuest } from "./user-menu-guest";
-import { getIsTokenValid } from "@/helpers/auth-helper";
+import { useAuth } from "@/context/AuthContext";
+import { logoutAction } from "@/actions/auth-action";
+import { useRouter } from "next/navigation";
 
 export const UserMenu = () => {
-  const { data: session, status } = useSession();
+  const { isAuthenticated, user } = useAuth();
+  const router = useRouter();
 
-  console.log("Session verisi:", session); // Session verisini logla
-
-  useEffect(() => {
-    if (session?.accessToken) {
-      // Token geçerliliğini kontrol et
-      const tokenIsValid = getIsTokenValid(session.accessToken);
-      if (!tokenIsValid) {
-        // Token geçersizse kullanıcıyı çıkartıyoruz
-        signOut({ callbackUrl: "/login" });
-      }
-    }
-  }, [session]);
-
-  if (status === "loading") {
-    return <span>Loading...</span>;
-  }
-
-  if (session?.user) {
-    console.log("Authenticated User:", session.user); // Kullanıcı verisini logla
+  if (isAuthenticated) {
     return (
       <UserMenuAuth
-        user={session.user}
-        logout={() => signOut({ callbackUrl: "/login" })}
+        user={user}
+        logout={() => {
+          logoutAction();
+          router.refresh();
+          router.push("/");
+        }}
       />
     );
   }

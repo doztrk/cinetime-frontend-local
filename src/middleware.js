@@ -1,31 +1,40 @@
-// middleware.js
-
-import { auth } from "@/auth";
 import { NextResponse } from "next/server";
+import { getCookie } from "@/helpers/server";
+import { me } from "@/services/auth-service";
 
-// API Hatalarını yakalama işlemi eklemek için custom middleware
+const protectedRoutePatterns = [
+  /^\/movies\//,
+  /^\/admin\//,
+  /^\/profile\//,
+  /^\/settings\//,
+  /^\/dashboard\//,
+];
+
 export const middleware = async (req) => {
-  try {
-    // auth middleware'i çalıştır
-    const response = await auth(req);
+  const authToken = (await getCookie("authToken")) || null;
+  const pathname = req.nextUrl.pathname;
 
-    // Eğer auth middleware'inden bir sonuç dönerse, devam et
-    if (response) {
-      return NextResponse.next(); // İsteği devam ettir
+  const isProtectedRoute = protectedRoutePatterns.some((pattern) =>
+    pattern.test(pathname)
+  );
+  if (isProtectedRoute) {
+    if (!authToken) {
+      return NextResponse.redirect(new URL("/login", req.url));
     }
-  } catch (error) {
-    // Hata varsa, hata mesajını logla
-    console.error("Middleware Hatası:", error.message);
-
-    // Hata mesajıyla beraber bir hata yanıtı döndür
-    return NextResponse.json(
-      { error: "API Hatası: " + error.message },
-      { status: 500 }
-    );
+    try {
+      const meReq = await me(authToken);
+      const res = await meReq.json();
+      if (res.httpStatus === "OK" && res.object) {
+        return NextResponse.next();
+      }
+      return NextResponse.redirect(new URL("/login", req.url));
+    } catch (err) {
+      console.error("Middleware auth check error:", err);
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
   }
 
-  // Eğer auth işlemi başarısız olduysa, burada dönecek yanıt
-  return NextResponse.redirect(new URL("/login", req.url));
+  return NextResponse.next();
 };
 
 export const config = {
