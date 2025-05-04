@@ -1,65 +1,142 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import { useRouter } from 'next/navigation';
-// The Header import should be removed
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
+import { useRouter } from "next/navigation";
 
 export default function MovieDetailPage({ params }) {
-  const router = useRouter();
-  
-  // In a real app, you would fetch movie details based on params.id
-  const movie = {
-    id: params.id,
-    title: `Movie ${params.id}`,
-    poster: '/images/placeholder.jpg',
-    description: 'This is a detailed movie description. In a real application, this data would come from an API.',
-    rating: 4.5,
-    director: 'Director Name',
-    cast: ['Actor 1', 'Actor 2', 'Actor 3'],
-    releaseDate: '2023-01-01',
-    duration: '120 min'
-  };
+	const router = useRouter();
+	const [movie, setMovie] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+	const [imgError, setImgError] = useState(false);
 
-  const handleBuyTickets = () => {
-    router.push(`/seat-selection?movieId=${params.id}`);
-  };
+	useEffect(() => {
+		const fetchMovie = async () => {
+			try {
+				setLoading(true);
+				const response = await fetch(
+					`${process.env.NEXT_PUBLIC_API_URL}/api/movies/${params.id}`
+				);
 
-  return (
-    <main>
-      {/* The <Header /> component should NOT be here */}
-      <Container className="py-5">
-        <Row>
-          <Col md={4}>
-            <img 
-              src={movie.poster} 
-              alt={movie.title}
-              className="img-fluid rounded" 
-              style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }}
-            />
-          </Col>
-          <Col md={8}>
-            <h1>{movie.title}</h1>
-            <p className="lead">Rating: {movie.rating}/5</p>
-            <p><strong>Director:</strong> {movie.director}</p>
-            <p><strong>Cast:</strong> {movie.cast.join(', ')}</p>
-            <p><strong>Release Date:</strong> {movie.releaseDate}</p>
-            <p><strong>Duration:</strong> {movie.duration}</p>
-            <div className="my-4">
-              <h3>Synopsis</h3>
-              <p>{movie.description}</p>
-            </div>
-            <Button 
-              variant="primary" 
-              size="lg"
-              onClick={handleBuyTickets}
-            >
-              Buy Tickets
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-      {/* The <Footer /> component should NOT be here either */}
-    </main>
-  );
+				if (!response.ok) {
+					throw new Error(`HTTP error! Status: ${response.status}`);
+				}
+
+				const data = await response.json();
+
+				if (data && data.object) {
+					setMovie(data.object);
+				} else {
+					throw new Error("Failed to fetch movie details");
+				}
+			} catch (err) {
+				console.error("Error fetching movie:", err);
+				setError(
+					err.message || "An error occurred while fetching the movie data"
+				);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		if (params.id) {
+			fetchMovie();
+		}
+	}, [params.id]);
+
+	const handleBuyTickets = () => {
+		router.push(`/seat-selection?movieId=${params.id}`);
+	};
+
+	const getImageUrl = () => {
+		if (imgError || !movie?.posterUrl) {
+			return "/images/placeholder.jpg";
+		}
+
+		let imageUrl = movie.posterUrl;
+
+		if (imageUrl.startsWith("/uploads/")) {
+			return `${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`;
+		}
+
+		return imageUrl;
+	};
+
+	if (loading) {
+		return (
+			<Container
+				className="d-flex justify-content-center align-items-center"
+				style={{ minHeight: "50vh" }}
+			>
+				<Spinner animation="border" role="status">
+					<span className="visually-hidden">Loading...</span>
+				</Spinner>
+			</Container>
+		);
+	}
+
+	if (error) {
+		return (
+			<Container className="py-5">
+				<Alert variant="danger">Error: {error}</Alert>
+			</Container>
+		);
+	}
+
+	if (!movie) {
+		return (
+			<Container className="py-5">
+				<Alert variant="warning">Movie not found</Alert>
+			</Container>
+		);
+	}
+
+	return (
+		<main>
+			<Container className="py-5">
+				<Row>
+					<Col md={4}>
+						<img
+							src={getImageUrl()}
+							alt={movie.title}
+							className="img-fluid rounded"
+							style={{ width: "100%", maxHeight: "500px", objectFit: "cover" }}
+							onError={() => setImgError(true)}
+						/>
+					</Col>
+					<Col md={8}>
+						<h1>{movie.title}</h1>
+						{movie.rating && <p className="lead">Rating: {movie.rating}/10</p>}
+						<p>
+							<strong>Director:</strong> {movie.director}
+						</p>
+						<p>
+							<strong>Cast:</strong> {movie.cast?.join(", ")}
+						</p>
+						<p>
+							<strong>Release Date:</strong>{" "}
+							{new Date(movie.releaseDate).toLocaleDateString()}
+						</p>
+						<p>
+							<strong>Duration:</strong> {movie.duration} min
+						</p>
+						<p>
+							<strong>Genre:</strong> {movie.genre?.join(", ")}
+						</p>
+						<p>
+							<strong>Format:</strong> {movie.formats?.join(", ")}
+						</p>
+						<div className="my-4">
+							<h3>Synopsis</h3>
+							<p>{movie.summary}</p>
+						</div>
+						<Button variant="primary" size="lg" onClick={handleBuyTickets}>
+							Buy Tickets
+						</Button>
+					</Col>
+				</Row>
+			</Container>
+		</main>
+	);
 }
