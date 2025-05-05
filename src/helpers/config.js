@@ -1,46 +1,60 @@
+// src/helpers/config.js
+
 export const appConfig = {
-  project: {
-    name: "CineTime",
-    slogan: "Your Ultimate Movie Experience",
-    description:
-      "CineTime is your go-to platform for discovering the latest movies, showtimes, and exclusive cinema content. Enjoy seamless ticket booking, personalized recommendations, and a world of entertainment at your fingertips.",
-  },
-  apiURL: "http://localhost:8080/api",
-  genders: [
-    { label: "Female", value: "FEMALE" },
-    { label: "Male", value: "MALE" },
-  ],
-  endpoints: {
-    cinema: {
-      list: "/cinemas",
-      details: (id) => `/cinemas/${id}`,
-      halls: (cinemaId) => `/cinemas/${cinemaId}/halls`,
-    },
-  },
-  movie: {
-    list: "/movies",
-    create: "/movies",
-    showtimes: (movieId) => `/movies/${movieId}/show-times`,
-    bySlug: (slug) => `/movies/${slug}`,
-    comingSoon: "/movies/coming-soon",
-    byHall: (hallName) => `/movies/hall/${hallName}`,
-    inTheaters: "/movies/in-theaters",
-  },
-  user: {
-    login: "/login",
-    register: "/register",
-    forgotPassword: "/forgot-password",
-    resetPassword: "/reset-password",
-    validateResetCode: "/validate-reset-password-code",
-    search: "/users/admin",
-    create: "/users/auth",
-    update: "/users/auth",
-    delete: "/users/auth",
-  },
-  favorites: {
-    userFavorites: "/favorites/auth",
-  },
-  hall: {
-    specialHalls: "/halls/special-halls",
-  },
+	project: {
+		name: "CineTime",
+		slogan: "Your Ultimate Movie Experience",
+		description:
+			"CineTime is your go-to platform for discovering the latest movies, showtimes, and exclusive cinema content.",
+	},
+	apiURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api",
+	apiURLWithoutApi: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080",
+	endpoints: {
+		cinema: {
+			list: "/cinemas",
+			details: (id) => `/cinemas/${id}`,
+			halls: (cinemaId) => `/cinemas/${cinemaId}/halls`,
+			specialHalls: "/halls/special-halls",
+		},
+		movie: {
+			all: "/movies/getAllMoviesByPage",
+			query: "/movies${query}",
+			details: (id) => `/movies/${id}`,
+			create: "/movies",
+			update: (id) => `/movies/${id}`,
+			delete: (id) => `/movies/${id}`,
+			search: (query) => `/movies?q=${query}`,
+			showtimes: (movieId) => `/movies/${movieId}/show-times`,
+			bySlug: (slug) => `/movies/slug/${slug}`,
+			comingSoon: "/movies/coming-soon",
+			inTheaters: "/movies/in-theaters",
+			byHall: (hallName) => `/movies/hall/${hallName}`,
+		},
+		user: {
+			login: "/login",
+			register: "/register",
+			forgotPassword: "/forgot-password",
+			resetPassword: "/reset-password",
+			validateResetCode: "/validate-reset-password-code",
+			getCurrentUser: "/users/auth",
+			search: "/users/admin",
+			create: "/users/auth",
+			update: "/users/auth",
+			delete: "/users/auth",
+			getById: (id) => `/users/${id}/admin`,
+		},
+		ticket: {
+			currentTickets: "/tickets/auth/current-tickets",
+			passedTickets: "/tickets/auth/passed-tickets",
+			reserve: (movieId) => `/tickets/reserve/${movieId}`,
+			purchase: "/tickets/buy-ticket",
+		},
+		favorites: {
+			userFavorites: "/favorites/auth",
+		},
+	},
+	genders: [
+		{ label: "Female", value: "FEMALE" },
+		{ label: "Male", value: "MALE" },
+	],
 };

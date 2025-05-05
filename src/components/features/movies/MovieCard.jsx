@@ -20,9 +20,10 @@ const MovieCard = (props) => {
 
 	// If the image URL is from the local backend server, ensure it has the correct base URL
 	if (imageUrl.startsWith("/uploads/")) {
-		imageUrl = `${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`;
+		imageUrl = `${process.env.NEXT_PUBLIC_API_URL_WITHOUT_API}${imageUrl}`;
 	}
 
+	console.log("Image URL: ", imageUrl);
 	return (
 		<div className={styles.card}>
 			<Link href={`/movies/${id}`}>

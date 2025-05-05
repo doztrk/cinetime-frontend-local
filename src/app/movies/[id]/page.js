@@ -1,10 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
 import { useRouter } from "next/navigation";
+import { getMovieById } from "@/services/movie-service";
 
 export default function MovieDetailPage({ params }) {
+	const unwrappedParams = use(params);
+	const movieId = unwrappedParams.id;
+
 	const router = useRouter();
 	const [movie, setMovie] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -15,15 +19,13 @@ export default function MovieDetailPage({ params }) {
 		const fetchMovie = async () => {
 			try {
 				setLoading(true);
-				const response = await fetch(
-					`${process.env.NEXT_PUBLIC_API_URL}/api/movies/${params.id}`
-				);
+				const movieResponse = await getMovieById(movieId);
 
-				if (!response.ok) {
-					throw new Error(`HTTP error! Status: ${response.status}`);
+				if (!movieResponse.ok) {
+					throw new Error(`HTTP error! Status: ${movieResponse.status}`);
 				}
 
-				const data = await response.json();
+				const data = await movieResponse.json();
 
 				if (data && data.object) {
 					setMovie(data.object);
@@ -40,10 +42,10 @@ export default function MovieDetailPage({ params }) {
 			}
 		};
 
-		if (params.id) {
+		if (movieId) {
 			fetchMovie();
 		}
-	}, [params.id]);
+	}, [movieId]);
 
 	const handleBuyTickets = () => {
 		router.push(`/seat-selection?movieId=${params.id}`);
