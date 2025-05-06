@@ -7,9 +7,13 @@ import { appConfig } from "@/helpers/config";
 // Fallback data in case the API fails
 import popularMovies from "@/helpers/data/movies.json";
 import comingMovies from "@/helpers/data/moviescoming.json";
+import {
+	getComingSoonMovies,
+	getInTheatersMovies,
+} from "@/services/movie-service";
 
 export default function MoviesPage() {
-	const [inTheaters, setInTheaters] = useState(popularMovies);
+	const [inTheaters, setInTheaters] = useState([]);
 	const [comingSoon, setComingSoon] = useState(comingMovies);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -20,24 +24,22 @@ export default function MoviesPage() {
 				setLoading(true);
 
 				// Fetch movies in theaters
-				const inTheatersResponse = await fetch(
-					`${appConfig.apiURL}${appConfig.movie.inTheaters}`
-				);
+				const inTheatersResponse = await getInTheatersMovies();
 
-				// Fetch coming soon movies
-				const comingSoonResponse = await fetch(
-					`${appConfig.apiURL}${appConfig.movie.comingSoon}`
-				);
-
-				if (!inTheatersResponse.ok || !comingSoonResponse.ok) {
-					throw new Error("Failed to fetch movies");
+				if (!inTheatersResponse.ok) {
+					throw new Error("Failed to fetch In Theaters movies");
 				}
 
-				// Parse JSON responses
+				// Fetch coming soon movies
+				const comingSoonResponse = await getComingSoonMovies();
+
+				if (!comingSoonResponse.ok) {
+					throw new Error("Failed to fetch Coming Soon movies");
+				}
+
 				const inTheatersData = await inTheatersResponse.json();
 				const comingSoonData = await comingSoonResponse.json();
 
-				// Process data to match MovieCard expected props
 				if (inTheatersData.object?.content) {
 					const processedInTheaters = inTheatersData.object.content.map(
 						(movie) => ({
@@ -56,7 +58,6 @@ export default function MoviesPage() {
 							id: movie.id,
 							title: movie.title,
 							image: movie.posterUrl || "/placeholder-movie.jpg",
-							// Add any other props your MovieList/MovieCard needs
 						})
 					);
 					setComingSoon(processedComingSoon);
@@ -64,7 +65,6 @@ export default function MoviesPage() {
 			} catch (error) {
 				console.error("Error fetching movies:", error);
 				setError(error.message);
-				// Keep using fallback data on error
 			} finally {
 				setLoading(false);
 			}

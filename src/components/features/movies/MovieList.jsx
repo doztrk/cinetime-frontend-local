@@ -15,6 +15,7 @@ const MovieList = ({ title, movies }) => {
 							id={item.id}
 							title={item.title}
 							image={item.posterUrl || item.image} // Try both property names
+							
 						/>
 					</Col>
 				))}

@@ -15,6 +15,7 @@ export const appConfig = {
 			details: (id) => `/cinemas/${id}`,
 			halls: (cinemaId) => `/cinemas/${cinemaId}/halls`,
 			specialHalls: "/halls/special-halls",
+			getByMovieId: (movieId) => `/cinemas/movie/${movieId}`
 		},
 		movie: {
 			all: "/movies/getAllMoviesByPage",

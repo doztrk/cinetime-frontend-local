@@ -23,33 +23,35 @@ const MovieCard = (props) => {
 		imageUrl = `${process.env.NEXT_PUBLIC_API_URL_WITHOUT_API}${imageUrl}`;
 	}
 
-	console.log("Image URL: ", imageUrl);
 	return (
 		<div className={styles.card}>
-			<Link href={`/movies/${id}`}>
-				<div className={styles.cardContainer}>
-					<div style={{ position: "relative", width: "100%", height: "100%" }}>
-						<Image
-							src={imageUrl}
-							alt={title || "Movie poster"}
-							className={styles.cardImage}
-							style={{ objectFit: "cover" }}
-							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-							fill
-							onError={() => setImgError(true)}
-							unoptimized={imageUrl.startsWith("http")} // Don't optimize external URLs
-						/>
-					</div>
-					<div className={styles.cardButtons}>
+			<div className={styles.cardContainer}>
+				<div style={{ position: "relative", width: "100%", height: "100%" }}>
+					<Image
+						src={imageUrl}
+						alt={title || "Movie poster"}
+						className={styles.cardImage}
+						style={{ objectFit: "cover" }}
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+						fill
+						onError={() => setImgError(true)}
+						unoptimized={imageUrl.startsWith("http")} // Don't optimize external URLs
+					/>
+				</div>
+				<div className={styles.cardButtons}>
+					<Link href={`/seat-selection?movieId=${id}`} passHref>
 						<Button size="md" className={styles.button}>
 							Hemen Bilet Al
 						</Button>
+					</Link>
+
+					<Link href={`/movies/${id}`} passHref>
 						<Button size="md" className={styles.button}>
 							İncele
 						</Button>
-					</div>
+					</Link>
 				</div>
-			</Link>
+			</div>
 		</div>
 	);
 };

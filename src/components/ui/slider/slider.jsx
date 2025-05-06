@@ -1,91 +1,125 @@
-'use client';
+// Updated Slider.jsx
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { FaClock } from 'react-icons/fa';
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { FaClock } from "react-icons/fa";
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import './slider.css';
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "./slider.css";
 
-// 🔥 Animasyon verilerini buradan alıyoruz
-import animations from '@/helpers/data/animations.json';
+import { getInTheatersMovies } from "@/services/movie-service";
 
 const Slider = () => {
-  return (
-    <div className="slider-wrapper">
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={30}
-        slidesPerView={1}
-        loop={true}
-        autoplay={{ delay: 4000, disableOnInteraction: false }}
-        pagination={{
-          el: '.swiper-pagination',
-          clickable: true,
-        }}
-        className="swiper-container"
-      >
-        {animations.map((anim) => (
-          <SwiperSlide key={anim.id}>
-            <div
-              className="slide-content"
-              style={{ backgroundImage: `url(${anim.image})` }}
-            >
-              <div className="slide-inner">
-                <h3>{anim.text}</h3>
-                <p className="description">{anim.description}</p>
+	const [movies, setMovies] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 
-                <div className="movie-meta">
-                  <div className="slide-icons">
-                    {/* Yaş Sınırı */}
-                    <span className="icon-group">
-                      <img
-                        src={anim.ageLimit}
-                        alt="Yaş Sınırı"
-                        className="rtuk-icon"
-                      />
-                    </span>
+	useEffect(() => {
+		fetchMovieData();
+	}, []);
 
-                    {/* İçerik Uyarıları */}
-                    {anim.warnings.map((src, index) => (
-                      <span className="icon-group" key={`warn-${index}`}>
-                        <img src={src} alt="Uyarı" className="rtuk-icon" />
-                      </span>
-                    ))}
+	const fetchMovieData = async () => {
+		try {
+			setLoading(true);
+			const movieResponse = await getInTheatersMovies();
 
-                    {/* Etiketler */}
-                    {anim.tags.map((src, index) => (
-                      <span className="icon-group" key={`tag-${index}`}>
-                        <img src={src} alt="Etiket" className="rtuk-icon" />
-                      </span>
-                    ))}
-                  </div>
+			if (!movieResponse.ok) {
+				throw new Error("Failed to fetch movie data");
+			}
 
-                  <span className="duration">
-                    <FaClock /> {anim.duration}
-                  </span>
-                </div>
+			const responseData = await movieResponse.json();
 
-                <div className="buttons">
-                  <Link href={`/buy-ticket/${anim.id}`} className="btn btn-buy">
-                    Hemen Bilet Al
-                  </Link>
-                  <Link href={`/movies/${anim.id}`} className="btn btn-detail">
-                    İncele
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-        <div className="swiper-pagination"></div>
-      </Swiper>
-    </div>
-  );
+			if (
+				responseData &&
+				responseData.object &&
+				responseData.object.content &&
+				Array.isArray(responseData.object.content)
+			) {
+				setMovies(responseData.object.content);
+			} else {
+				console.error("Unexpected API response format:", responseData);
+				setMovies([]);
+			}
+		} catch (err) {
+			console.error("Error fetching movie data:", err);
+			setError(err.message);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	return (
+		<div className="slider-wrapper">
+			<Swiper
+				modules={[Navigation, Pagination, Autoplay]}
+				spaceBetween={0}
+				slidesPerView={1}
+				loop={true}
+				autoplay={{ delay: 4000, disableOnInteraction: false }}
+				pagination={{
+					el: ".swiper-pagination",
+					clickable: true,
+				}}
+				className="swiper-container"
+			>
+				{movies.map((movie) => {
+					let imageUrl = movie.posterUrl || movie.image;
+					if (imageUrl && imageUrl.startsWith("/uploads/")) {
+						imageUrl = `${process.env.NEXT_PUBLIC_API_URL_WITHOUT_API}${imageUrl}`;
+					}
+
+					return (
+						<SwiperSlide key={movie.id}>
+							<div className="slide-content">
+								<div
+									className="hero-image"
+									style={{ backgroundImage: `url(${imageUrl})` }}
+								>
+									{/* The key is this empty div that contains the background image */}
+								</div>
+
+								<div className="slide-inner">
+									<h3>{movie.title || "Untitled Movie"}</h3>
+									<p className="description">
+										{movie.summary || "No description available"}
+									</p>
+
+									<div className="movie-meta">
+										{movie.duration && (
+											<span className="duration">
+												<FaClock /> {movie.duration} min
+											</span>
+										)}
+									</div>
+
+									<div className="buttons">
+										<Link
+											href={`/seat-selection?movieId=${movie.id}`}
+											className="btn btn-buy"
+										>
+											Hemen Bilet Al
+										</Link>
+										<Link
+											href={`/movies/${movie.id}`}
+											className="btn btn-detail"
+										>
+											İncele
+										</Link>
+									</div>
+								</div>
+							</div>
+						</SwiperSlide>
+					);
+				})}
+				<div className="swiper-pagination"></div>
+			</Swiper>
+		</div>
+	);
 };
 
 export default Slider;

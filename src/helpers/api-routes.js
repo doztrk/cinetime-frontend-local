@@ -11,7 +11,7 @@ export const CINEMA_LIST_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.cinem
 export const CINEMA_DETAILS_API_ROUTE = (id) => `${API_BASE_URL}${appConfig.endpoints.cinema.details(id)}`;
 export const CINEMA_HALLS_API_ROUTE = (cinemaId) => `${API_BASE_URL}${appConfig.endpoints.cinema.halls(cinemaId)}`;
 export const SPECIAL_HALLS_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.cinema.specialHalls}`;
-
+export const CINEMAS_BY_MOVIE_API_ROUTE = (movieId) =>  `${API_BASE_URL}${appConfig.endpoints.cinema.getByMovieId(movieId)}`;
 // Movie endpoints
 export const GET_MOVIE_BY_QUERY_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.movie.query}`;
 export const GET_ALL_MOVIES_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.movie.all}`;
@@ -22,7 +22,7 @@ export const MOVIE_DELETE_API_ROUTE = (id) => `${API_BASE_URL}${appConfig.endpoi
 export const MOVIE_SEARCH_API_ROUTE = (query) => `${API_BASE_URL}${appConfig.endpoints.movie.search(query)}`;
 export const MOVIE_SHOWTIMES_API_ROUTE = (movieId) => `${API_BASE_URL}${appConfig.endpoints.movie.showtimes(movieId)}`;
 export const MOVIE_BY_SLUG_API_ROUTE = (slug) => `${API_BASE_URL}${appConfig.endpoints.movie.bySlug(slug)}`;
-export const MOVIE_COMING_SOON_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.movie.comingSoon}`;
+export const MOVIE_COMING_SOON_API_ROUTE = `${API_URL}${appConfig.endpoints.movie.comingSoon}`;
 export const MOVIE_IN_THEATERS_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.movie.inTheaters}`;
 export const MOVIE_BY_HALL_API_ROUTE = (hallName) => `${API_BASE_URL}${appConfig.endpoints.movie.byHall(hallName)}`;
 

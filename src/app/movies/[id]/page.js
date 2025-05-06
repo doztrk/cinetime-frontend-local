@@ -4,6 +4,7 @@ import React, { useState, useEffect, use } from "react";
 import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 import { getMovieById } from "@/services/movie-service";
+import Link from "next/link";
 
 export default function MovieDetailPage({ params }) {
 	const unwrappedParams = use(params);
@@ -48,7 +49,7 @@ export default function MovieDetailPage({ params }) {
 	}, [movieId]);
 
 	const handleBuyTickets = () => {
-		router.push(`/seat-selection?movieId=${params.id}`);
+		router.push(`/seat-selection?movieId=${movieId}`);
 	};
 
 	const getImageUrl = () => {
@@ -133,9 +134,11 @@ export default function MovieDetailPage({ params }) {
 							<h3>Synopsis</h3>
 							<p>{movie.summary}</p>
 						</div>
-						<Button variant="primary" size="lg" onClick={handleBuyTickets}>
-							Buy Tickets
-						</Button>
+						<Link href={`/seat-selection?movieId=${movieId}`}>
+							<Button variant="primary" size="lg">
+								Buy Tickets
+							</Button>
+						</Link>
 					</Col>
 				</Row>
 			</Container>
