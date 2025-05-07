@@ -134,7 +134,7 @@ export default function MovieDetailPage({ params }) {
 							<h3>Synopsis</h3>
 							<p>{movie.summary}</p>
 						</div>
-						<Link href={`/seat-selection?movieId=${movieId}`}>
+						<Link href={`/step-session?movieId=${movieId}`}>
 							<Button variant="primary" size="lg">
 								Buy Tickets
 							</Button>

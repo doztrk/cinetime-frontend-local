@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./StepSession.module.scss";
-import {
-	getInTheatersMovies,
-	getMovieShowtimes,
-} from "@/services/movie-service";
+import { getInTheatersMovies } from "@/services/movie-service";
+import { getMovieShowtimes } from "@/services/showtime-service";
 
 const StepSessionPage = () => {
 	const router = useRouter();
@@ -69,7 +67,7 @@ const StepSessionPage = () => {
 	const fetchCinemas = async (movieId) => {
 		try {
 			setLoading(true);
-		
+
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_API_URL}/cinemas`
 			);

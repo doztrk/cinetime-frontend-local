@@ -1,3 +1,5 @@
+import { CINEMA_DETAILS_API_ROUTE, CINEMAS_BY_MOVIE_API_ROUTE } from "@/helpers/api-routes";
+
 /**
  * Get a list of cinemas showing a specific movie
  * @param {number} movieId - Movie ID
@@ -20,3 +22,9 @@ export const getCinemasByMovieId = async (movieId, params = {}) => {
 
 	return fetch(url.toString());
 };
+
+export const getCinemaById = async (cinemaId) =>{
+	const url = new URL(CINEMA_DETAILS_API_ROUTE(cinemaId));
+
+	return fetch(url.toString());
+}

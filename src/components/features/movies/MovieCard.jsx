@@ -39,7 +39,7 @@ const MovieCard = (props) => {
 					/>
 				</div>
 				<div className={styles.cardButtons}>
-					<Link href={`/seat-selection?movieId=${id}`} passHref>
+					<Link href={`/step-session?movieId=${id}`} passHref>
 						<Button size="md" className={styles.button}>
 							Hemen Bilet Al
 						</Button>

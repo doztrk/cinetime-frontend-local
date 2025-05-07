@@ -5,7 +5,7 @@ import {
 	MOVIE_CREATE_API_ROUTE,
 	MOVIE_UPDATE_API_ROUTE,
 	MOVIE_DELETE_API_ROUTE,
-	MOVIE_SHOWTIMES_API_ROUTE,
+	
 	MOVIE_BY_SLUG_API_ROUTE,
 	MOVIE_COMING_SOON_API_ROUTE,
 	MOVIE_IN_THEATERS_API_ROUTE,
@@ -118,23 +118,7 @@ export const getMoviesByHall = async (hallName, params = {}) => {
 	return fetch(url.toString());
 };
 
-/**
- * Get upcoming showtimes for a movie
- * @param {number} movieId - Movie ID
- * @param {Object} params - Query parameters for pagination
- * @returns {Promise<Response>} Fetch response
- */
-export const getMovieShowtimes = async (movieId, params = {}) => {
-	const url = new URL(MOVIE_SHOWTIMES_API_ROUTE(movieId));
 
-	Object.entries(params).forEach(([key, value]) => {
-		if (value !== undefined && value !== null) {
-			url.searchParams.append(key, value);
-		}
-	});
-
-	return fetch(url.toString());
-};
 
 /**
  * Create a new movie (admin only)

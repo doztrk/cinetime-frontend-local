@@ -8,14 +8,15 @@ export const appConfig = {
 			"CineTime is your go-to platform for discovering the latest movies, showtimes, and exclusive cinema content.",
 	},
 	apiURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api",
-	apiURLWithoutApi: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080",
+	apiURLWithoutApi:
+		process.env.NEXT_PUBLIC_API_URL_WITHOUT_API || "http://localhost:8080",
 	endpoints: {
 		cinema: {
 			list: "/cinemas",
 			details: (id) => `/cinemas/${id}`,
 			halls: (cinemaId) => `/cinemas/${cinemaId}/halls`,
 			specialHalls: "/halls/special-halls",
-			getByMovieId: (movieId) => `/cinemas/movie/${movieId}`
+			getByMovieId: (movieId) => `/cinemas/movie/${movieId}`,
 		},
 		movie: {
 			all: "/movies/getAllMoviesByPage",
@@ -25,11 +26,14 @@ export const appConfig = {
 			update: (id) => `/movies/${id}`,
 			delete: (id) => `/movies/${id}`,
 			search: (query) => `/movies?q=${query}`,
-			showtimes: (movieId) => `/movies/${movieId}/show-times`,
 			bySlug: (slug) => `/movies/slug/${slug}`,
 			comingSoon: "/movies/coming-soon",
 			inTheaters: "/movies/in-theaters",
 			byHall: (hallName) => `/movies/hall/${hallName}`,
+		},
+		showtime: {
+			upcoming: (movieId) => `/showtime/upcoming/${movieId}`,
+			getById: (showtimeId) => `/showtime/${showtimeId}`,
 		},
 		user: {
 			login: "/login",

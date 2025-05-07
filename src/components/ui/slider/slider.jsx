@@ -99,7 +99,7 @@ const Slider = () => {
 
 									<div className="buttons">
 										<Link
-											href={`/seat-selection?movieId=${movie.id}`}
+											href={`/step-session?movieId=${movie.id}`}
 											className="btn btn-buy"
 										>
 											Hemen Bilet Al

@@ -3,8 +3,8 @@ import { ApiError } from "next/dist/server/api-utils";
 import { appConfig } from "./config";
 
 // Base URL
-export const API_BASE_URL = appConfig.apiURLWithoutApi;
-export const API_URL = appConfig.apiURL;
+export const API_BASE_URL = appConfig.apiURL;
+export const API_URL = appConfig.apiURLWithoutApi;
 
 // Cinema endpoints
 export const CINEMA_LIST_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.cinema.list}`;
@@ -20,11 +20,14 @@ export const MOVIE_CREATE_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.movi
 export const MOVIE_UPDATE_API_ROUTE = (id) => `${API_BASE_URL}${appConfig.endpoints.movie.update(id)}`;
 export const MOVIE_DELETE_API_ROUTE = (id) => `${API_BASE_URL}${appConfig.endpoints.movie.delete(id)}`;
 export const MOVIE_SEARCH_API_ROUTE = (query) => `${API_BASE_URL}${appConfig.endpoints.movie.search(query)}`;
-export const MOVIE_SHOWTIMES_API_ROUTE = (movieId) => `${API_BASE_URL}${appConfig.endpoints.movie.showtimes(movieId)}`;
 export const MOVIE_BY_SLUG_API_ROUTE = (slug) => `${API_BASE_URL}${appConfig.endpoints.movie.bySlug(slug)}`;
-export const MOVIE_COMING_SOON_API_ROUTE = `${API_URL}${appConfig.endpoints.movie.comingSoon}`;
+export const MOVIE_COMING_SOON_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.movie.comingSoon}`;
 export const MOVIE_IN_THEATERS_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.movie.inTheaters}`;
 export const MOVIE_BY_HALL_API_ROUTE = (hallName) => `${API_BASE_URL}${appConfig.endpoints.movie.byHall(hallName)}`;
+
+//Showtime Endpoints 
+export const GET_UPCOMING_SHOWTIMES_API_ROUTE = (movieId) => `${API_BASE_URL}${appConfig.endpoints.showtime.upcoming(movieId)}`;
+export const GET_SHOWTIME_BY_ID_API_ROUTE = (showtimeId) => `${API_BASE_URL}${appConfig.endpoints.showtime.getById(showtimeId)}`;
 
 // User endpoints
 export const LOGIN_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.user.login}`;
