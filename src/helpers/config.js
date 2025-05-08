@@ -35,6 +35,10 @@ export const appConfig = {
 			upcoming: (movieId) => `/showtime/upcoming/${movieId}`,
 			getById: (showtimeId) => `/showtime/${showtimeId}`,
 		},
+		seat: {
+			occupied: (showtimeId) => `/seat/getOccupiedSeats/${showtimeId}`,
+		},
+
 		user: {
 			login: "/login",
 			register: "/register",

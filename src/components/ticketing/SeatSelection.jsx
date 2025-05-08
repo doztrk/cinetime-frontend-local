@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button, Container, Spinner } from "react-bootstrap";
 import styles from "./SeatSelection.module.scss";
+import { getOccupiedSeats } from "@/services/seat-service";
 
 const SeatSelection = () => {
 	const router = useRouter();
@@ -33,15 +34,7 @@ const SeatSelection = () => {
 	const rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
 	const seatsPerRow = 14;
 
-	const [occupiedSeats, setOccupiedSeats] = useState([
-		"A3",
-		"B7",
-		"C10",
-		"D5",
-		"E4",
-		"F3",
-		"F4",
-	]);
+	const [occupiedSeats, setOccupiedSeats] = useState([]);
 
 	useEffect(() => {
 		const fetchDetails = async () => {
@@ -81,6 +74,22 @@ const SeatSelection = () => {
 
 					if (showtimeData?.object) {
 						setShowtimeDetails(showtimeData.object);
+					}
+
+					const occupiedSeatsResponse = await getOccupiedSeats(showtimeId);
+					if (!occupiedSeatsResponse.ok)
+						throw new Error("Failed to fetch reserved seats");
+					const occupiedSeatsData = await occupiedSeatsResponse.json();
+
+					if (
+						occupiedSeatsData?.object &&
+						Array.isArray(occupiedSeatsData.object)
+					) {
+						const formattedSeats = occupiedSeatsData.object.map(
+							(seat) =>
+								seat.fullSeatName || `${seat.seatLetter}${seat.seatNumber}`
+						);
+						setOccupiedSeats(formattedSeats);
 					}
 				}
 			} catch (error) {

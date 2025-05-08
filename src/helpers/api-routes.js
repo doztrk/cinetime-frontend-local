@@ -29,6 +29,9 @@ export const MOVIE_BY_HALL_API_ROUTE = (hallName) => `${API_BASE_URL}${appConfig
 export const GET_UPCOMING_SHOWTIMES_API_ROUTE = (movieId) => `${API_BASE_URL}${appConfig.endpoints.showtime.upcoming(movieId)}`;
 export const GET_SHOWTIME_BY_ID_API_ROUTE = (showtimeId) => `${API_BASE_URL}${appConfig.endpoints.showtime.getById(showtimeId)}`;
 
+//Seat Endpoints
+export const GET_OCCUPIED_SEATS_API_ROUTE = (showtimeId) => `${API_BASE_URL}${appConfig.endpoints.seat.occupied(showtimeId)}`;
+
 // User endpoints
 export const LOGIN_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.user.login}`;
 export const REGISTER_API_ROUTE = `${API_BASE_URL}${appConfig.endpoints.user.register}`;
